@@ -5,20 +5,28 @@ import com.company.Graphs.Graph;
 
 import java.util.*;
 
-public class ShortestDistanceFromVertexCalculationGraphAlgorithm<T, V> implements GraphAlgorithmInterface<Map<T, Integer>, T, V> {
+/**
+ * Class for calculating shortest distance from point to all others
+ * @param <T> Type of vertexId
+ * @param <E> Type of values in vertex
+ */
+public class ShortestDistanceFromVertexCalculationGraphAlgorithm<T, E> implements GraphAlgorithmInterface<Map<T, Integer>, T, E> {
     private final T startVertex;
     public ShortestDistanceFromVertexCalculationGraphAlgorithm(T vertexId) {
         startVertex = vertexId;
     }
 
-    Map<T, Integer> calculateDistances(Graph<T, V> graph) throws NoSuchVertexException {
+    private Map<T, Integer> initiateDistanceMap(Graph<T, E> graph) {
         Map<T, Integer> distances = new HashMap<>();
         for (T vertex: graph.getAllVertexesIds()) {
             distances.put(vertex, Integer.MAX_VALUE);
         }
-
         distances.put(startVertex, 0);
+        return distances;
+    }
 
+    private Map<T, Integer> calculateDistances(Graph<T, E> graph) throws NoSuchVertexException {
+        Map<T, Integer> distances = initiateDistanceMap(graph);
         Queue<T> queue = new LinkedList<>();
         queue.add(startVertex);
 
@@ -34,7 +42,7 @@ public class ShortestDistanceFromVertexCalculationGraphAlgorithm<T, V> implement
     }
 
     @Override
-    public Map<T, Integer> run(Graph<T, V> graph) {
+    public Map<T, Integer> run(Graph<T, E> graph) {
         try {
             return calculateDistances(graph);
         } catch (NoSuchVertexException ignored) {
