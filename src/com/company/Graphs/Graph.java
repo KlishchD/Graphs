@@ -8,6 +8,10 @@ import com.company.Graphs.Errors.VertexAlreadyExistsException;
 
 import java.util.List;
 
+/**
+ * @param <T> Type of vertexId
+ * @param <E> Type of values in vertex
+ */
 public interface Graph<T, E> {
     /**
      * Adds an edge between two vertexes
@@ -100,4 +104,14 @@ public interface Graph<T, E> {
      * @throws NoSuchVertexException
      */
     Integer calculateShortestDistanceBetweenVertexes(T firstVertex, T secondVertex) throws NoSuchVertexException;
+
+    /**
+     * @return number of vertexes in a graph
+     */
+    int getVertexNumber();
+
+    /**
+     * @return number of edges in a graph
+     */
+    int getEdgesNumber();
 }

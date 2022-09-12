@@ -12,6 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * @param <T> Type of vertexId
+ * @param <E> Type of values in vertex
+ */
 public abstract class AbstractGraph<T, E> implements Graph<T, E> {
     protected Map<T, List<T>> connectionsMap = new HashMap<>();
     protected Map<T, E> vertexValuesMap = new HashMap<>();
@@ -94,6 +99,7 @@ public abstract class AbstractGraph<T, E> implements Graph<T, E> {
             addEdge(vertexId, entry.getKey());
         }
     }
+
     /**
      * Checks if graph is connected
      *
@@ -103,6 +109,7 @@ public abstract class AbstractGraph<T, E> implements Graph<T, E> {
     public boolean isGraphConnected() {
         return runAlgorithm(new ConnectionCheckGraphAlgorithm<>());
     }
+
     /**
      * Counts the shortest distance between two vertexes (considers each vertex of the same length)
      *
@@ -119,5 +126,21 @@ public abstract class AbstractGraph<T, E> implements Graph<T, E> {
         if (!connectionsMap.containsKey(secondVertex))
             throw new NoSuchVertexException("There is no such vertex " + secondVertex);
         return runAlgorithm(new ShortestDistanceFromVertexCalculationGraphAlgorithm<>(firstVertex)).get(secondVertex);
+    }
+
+    /**
+     * @return number of vertexes in a graph
+     */
+    @Override
+    public int getVertexNumber() {
+        return vertexValuesMap.size();
+    }
+
+    /**
+     * @return number of edges in a graph
+     */
+    @Override
+    public int getEdgesNumber() {
+        return connectionsMap.values().stream().mapToInt(List::size).sum();
     }
 }
