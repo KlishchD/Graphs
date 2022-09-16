@@ -17,7 +17,7 @@ import java.util.Map;
  * @param <T> Type of vertexId
  * @param <E> Type of values in vertex
  */
-public abstract class AbstractGraph<T, E> implements Graph<T, E> {
+public abstract class AbstractGraph<T, E> implements GraphInterface<T, E> {
     protected Map<T, List<T>> connectionsMap = new HashMap<>();
     protected Map<T, E> vertexValuesMap = new HashMap<>();
 
