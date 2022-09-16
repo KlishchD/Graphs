@@ -1,7 +1,7 @@
 package com.company.Frames.GraphAgorithms;
 
 import com.company.Frames.Frame;
-import com.company.Frames.Listeners.MenuMoveActiveListener;
+import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.SetGridGraphAlgorithm;
 import com.company.Frames.MainFrame;
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.BFSWithRestorationMapGridGraphAlgorithm;
@@ -25,18 +25,18 @@ public class GraphAlgorithmsFrame extends Frame {
 
     private JButton createBFSButton() {
         return createButton("BFS",
-                new MenuMoveActiveListener(this, GridGraphAlgorithmFrame.getInstance()),
+                new FrameMoveActiveListener(this, GridGraphAlgorithmFrame.getInstance()),
                 new SetGridGraphAlgorithm(new BFSWithRestorationMapGridGraphAlgorithm()));
     }
 
     private JButton createDFSButton() {
         return createButton("DFS",
-                new MenuMoveActiveListener(this, GridGraphAlgorithmFrame.getInstance()),
+                new FrameMoveActiveListener(this, GridGraphAlgorithmFrame.getInstance()),
                 new SetGridGraphAlgorithm(new DFSWithRestorationMapGridGraphAlgorithm()));
     }
 
     private JButton createBackButton() {
-        return createButton("back", new MenuMoveActiveListener(this, MainFrame.getInstance()));
+        return createButton("back", new FrameMoveActiveListener(this, MainFrame.getInstance()));
     }
 
     private void addComponents() {

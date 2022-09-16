@@ -3,13 +3,16 @@ package com.company.Frames;
 
 import com.company.Frames.DataStuctures.DataStructuresFrame;
 import com.company.Frames.GraphAgorithms.GraphAlgorithmsFrame;
-import com.company.Frames.Listeners.MenuMoveActiveListener;
+import com.company.Frames.Listeners.FrameMoveActiveListener;
 
 import javax.swing.*;
 import java.awt.*;
 
 import static com.company.Frames.Utils.ButtonUtils.createButton;
 
+/**
+ * Main frame is a window which allows to select a type of algorithm to be watched or DataStructure, ...
+ */
 public class MainFrame extends Frame {
     private static final MainFrame instance = new MainFrame();
 
@@ -21,11 +24,11 @@ public class MainFrame extends Frame {
     }
 
     private JButton createGraphAlgorithmsButton() {
-        return createButton("Graph Algorithms", new MenuMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
+        return createButton("Graph Algorithms", new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
     }
 
     private JButton createDataStructuresButton() {
-        return createButton("Data Structures", new MenuMoveActiveListener(this, DataStructuresFrame.getInstance()));
+        return createButton("Data Structures", new FrameMoveActiveListener(this, DataStructuresFrame.getInstance()));
     }
 
     private void addComponents() {

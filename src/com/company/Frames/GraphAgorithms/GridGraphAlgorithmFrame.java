@@ -2,7 +2,7 @@ package com.company.Frames.GraphAgorithms;
 
 import com.company.Frames.Frame;
 import com.company.Frames.Listeners.GraphGridSelectCellActiveListener;
-import com.company.Frames.Listeners.MenuMoveActiveListener;
+import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.ShowAnotherMenuActiveListener;
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
 import com.company.Graphs.GridAlgorithmManager;
@@ -131,7 +131,7 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private JButton createBackButton() {
-        return createButton("back", e -> resetGrid(), new MenuMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
+        return createButton("back", e -> resetGrid(), new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
     }
 
     private void updateButton(JButton button, Color background, String text) {
