@@ -144,7 +144,7 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private JButton createClearGridButton() {
-        return createButton(CLEAR_BUTTON_TEXT, e -> resetGridColorsExceptSelected());
+        return createButton(CLEAR_BUTTON_TEXT, e -> resetFreeGridPointsVisualsExceptSelected());
     }
 
     private JButton createRunAlgorithmButton() {
@@ -213,7 +213,7 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private void runAlgorithm() {
-        resetGridColorsExceptSelected();
+        resetFreeGridPointsVisualsExceptSelected();
         GridAlgorithmResult result = algorithmManager.runAlgorithm();
         renderWorkOfAlgorithm(result.getVisited());
         renderRestorationOfPath(result.getRestoredPaths());
@@ -226,7 +226,7 @@ public class GridGraphAlgorithmFrame extends Frame {
         }
     }
 
-    private void resetGridColorsExceptSelected() {
+    private void resetFreeGridPointsVisualsExceptSelected() {
         for (Map.Entry<GridPoint, JButton> entry : buttons.entrySet()) {
             entry.getValue().setText(GRID_BUTTON_DEFAULT_TEXT);
             if (algorithmManager.isPointSelected(entry.getKey())) continue;
