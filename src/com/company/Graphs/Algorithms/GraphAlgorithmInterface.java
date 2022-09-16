@@ -1,6 +1,6 @@
 package com.company.Graphs.Algorithms;
 
-import com.company.Graphs.Graph;
+import com.company.Graphs.GraphInterface;
 
 /**
  * @param <T> return type of result of an algorithm
@@ -8,5 +8,5 @@ import com.company.Graphs.Graph;
  * @param <V> Type of values in vertex
  */
 public interface GraphAlgorithmInterface<T, E, V> {
-    T run(Graph<E, V> graph);
+    T run(GraphInterface<E, V> graph);
 }

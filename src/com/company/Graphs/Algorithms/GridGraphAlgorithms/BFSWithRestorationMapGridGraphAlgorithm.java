@@ -1,8 +1,8 @@
 package com.company.Graphs.Algorithms.GridGraphAlgorithms;
 
-import com.company.Graphs.Algorithms.GridGraphAlgorithmInterface;
 import com.company.Graphs.Errors.NoSuchVertexException;
-import com.company.Graphs.Graph;
+import com.company.Graphs.GraphInterface;
+import com.company.Graphs.Implementations.GridGraph;
 import sun.misc.Queue;
 
 import java.util.HashSet;
@@ -13,39 +13,31 @@ import java.util.Set;
 /**
  * Class for running BFS algorithm from source points to finish points omitting blocks points
  */
-public class BFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorithmInterface<Map<GridPoint, GridPoint>, GridPoint, Integer> {
+public class BFSWithRestorationMapGridGraphAlgorithm implements com.company.Graphs.Algorithms.GraphAlgorithmInterface<Map<GridPoint, GridPoint>, GridPoint, Integer> {
     private final Queue<GridPoint> queue = new Queue<>();
     private final Set<GridPoint> visited = new HashSet<>();
-    private Set<GridPoint> starts;
-    private Set<GridPoint> finishes;
-    private Set<GridPoint> blocks;
 
     public BFSWithRestorationMapGridGraphAlgorithm() {
     }
 
-    public BFSWithRestorationMapGridGraphAlgorithm(Set<GridPoint> starts, Set<GridPoint> finishes, Set<GridPoint> blocks) {
-        this.starts = starts;
-        this.finishes = finishes;
-        this.blocks = blocks;
-    }
-
-    private void setUpQueue() {
-        for (GridPoint start : starts) {
+    private void setUpQueue(GridGraph graph) {
+        for (GridPoint start : graph.getPointsOfType(GridPoint.GridPointType.SOURCE)) {
             queue.enqueue(start);
         }
     }
 
-    private void addNeighbours(Graph<GridPoint, Integer> graph, Map<GridPoint, GridPoint> result, GridPoint current) throws NoSuchVertexException {
+    private void addNeighbours(GridGraph graph, Map<GridPoint, GridPoint> result, GridPoint current) throws NoSuchVertexException {
         for (GridPoint neighbour : graph.getAllDirectlyConnectedVertexes(current)) {
-            if (visited.contains(neighbour) || blocks.contains(neighbour) || starts.contains(neighbour) || result.containsKey(neighbour))
-                continue;
+            if (visited.contains(neighbour) || result.containsKey(neighbour)) continue;
+            if (graph.getPointsOfType(GridPoint.GridPointType.BLOCKS).contains(neighbour)) continue;
+            if (graph.getPointsOfType(GridPoint.GridPointType.SOURCE).contains(neighbour)) continue;
             result.put(neighbour, current);
-            if (finishes.contains(neighbour)) continue;
+            if (graph.getPointsOfType(GridPoint.GridPointType.FINISH).contains(neighbour)) continue;
             queue.enqueue(neighbour);
         }
     }
 
-    private void makeBFSNextIteration(Graph<GridPoint, Integer> graph, Map<GridPoint, GridPoint> result) {
+    private void makeBFSNextIteration(GridGraph graph, Map<GridPoint, GridPoint> result) {
         try {
             GridPoint current = queue.dequeue();
             if (visited.contains(current)) return;
@@ -58,49 +50,19 @@ public class BFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorit
 
     /**
      * Runs BFS algorithm
+     *
      * @param graph on which to run algorithm
      * @return map, where value represents point and key it parent
      */
     @Override
-    public Map<GridPoint, GridPoint> run(Graph<GridPoint, Integer> graph) {
-        setUpQueue();
-
+    public Map<GridPoint, GridPoint> run(GraphInterface<GridPoint, Integer> graph) {
+        setUpQueue((GridGraph) graph);
         Map<GridPoint, GridPoint> result = new LinkedHashMap<>();
         while (!queue.isEmpty()) {
-            makeBFSNextIteration(graph, result);
+            makeBFSNextIteration((GridGraph) graph, result);
         }
-
         visited.clear();
         return result;
     }
 
-    @Override
-    public Set<GridPoint> getStarts() {
-        return starts;
-    }
-
-    @Override
-    public void setStarts(Set<GridPoint> strats) {
-        this.starts = strats;
-    }
-
-    @Override
-    public Set<GridPoint> getFinishes() {
-        return finishes;
-    }
-
-    @Override
-    public void setFinishes(Set<GridPoint> finishes) {
-        this.finishes = finishes;
-    }
-
-    @Override
-    public Set<GridPoint> getBlocks() {
-        return blocks;
-    }
-
-    @Override
-    public void setBlocks(Set<GridPoint> blocks) {
-        this.blocks = blocks;
-    }
 }

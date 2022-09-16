@@ -2,7 +2,7 @@ package com.company.Graphs.Algorithms.ArbitraryGraphAlgoritm;
 
 import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Errors.NoSuchVertexException;
-import com.company.Graphs.Graph;
+import com.company.Graphs.GraphInterface;
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ public class ShortestDistanceFromVertexCalculationGraphAlgorithm<T, E> implement
         startVertex = vertexId;
     }
 
-    private Map<T, Integer> initiateDistanceMap(Graph<T, E> graph) {
+    private Map<T, Integer> initiateDistanceMap(GraphInterface<T, E> graph) {
         Map<T, Integer> distances = new HashMap<>();
         for (T vertex: graph.getAllVertexesIds()) {
             distances.put(vertex, Integer.MAX_VALUE);
@@ -26,7 +26,7 @@ public class ShortestDistanceFromVertexCalculationGraphAlgorithm<T, E> implement
         return distances;
     }
 
-    private Map<T, Integer> calculateDistances(Graph<T, E> graph) throws NoSuchVertexException {
+    private Map<T, Integer> calculateDistances(GraphInterface<T, E> graph) throws NoSuchVertexException {
         Map<T, Integer> distances = initiateDistanceMap(graph);
         Queue<T> queue = new LinkedList<>();
         queue.add(startVertex);
@@ -43,7 +43,7 @@ public class ShortestDistanceFromVertexCalculationGraphAlgorithm<T, E> implement
     }
 
     @Override
-    public Map<T, Integer> run(Graph<T, E> graph) {
+    public Map<T, Integer> run(GraphInterface<T, E> graph) {
         try {
             return calculateDistances(graph);
         } catch (NoSuchVertexException ignored) {
