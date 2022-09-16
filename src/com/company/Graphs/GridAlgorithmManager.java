@@ -78,6 +78,14 @@ public class GridAlgorithmManager {
     }
 
     /**
+     * @param point point to check
+     * @return true if point is of type is not FREE
+     */
+    public boolean isPointSelected(GridPoint point) {
+        return graph.isPointSelected(point);
+    }
+
+    /**
      * Runs provided algorithm
      *
      * @return GridAlgorithmResult with all visted points and restored path from sources to finishes
@@ -89,5 +97,14 @@ public class GridAlgorithmManager {
         List<Pair<GridPoint, GridPoint>> restoredPath = restorePathFromFinishes(paths);
 
         return new GridAlgorithmResult(visited, restoredPath);
+    }
+    /**
+     * Updates type of point in a graph
+     *
+     * @param point point to be added
+     * @param type  type of point to be added
+     */
+    public void updatePointType(GridPoint point, GridPoint.GridPointType type) {
+        graph.updatePointType(point, type);
     }
 }
