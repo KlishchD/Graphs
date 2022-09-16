@@ -1,7 +1,6 @@
 package com.company.Frames;
 
 
-import com.company.Frames.DataStuctures.DataStructuresFrame;
 import com.company.Frames.GraphAgorithms.GraphAlgorithmsFrame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
 
@@ -16,6 +15,9 @@ import static com.company.Frames.Utils.ButtonUtils.createButton;
 public class MainFrame extends Frame {
     private static final MainFrame instance = new MainFrame();
 
+    private final Dimension FRAME_SIZE = new Dimension(400, 200);
+    private final String GRAPH_ALGORITHM_BUTTON_TEXT = "Graph Algorithms";
+
     private MainFrame() {
     }
 
@@ -24,26 +26,21 @@ public class MainFrame extends Frame {
     }
 
     private JButton createGraphAlgorithmsButton() {
-        return createButton("Graph Algorithms", new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
-    }
-
-    private JButton createDataStructuresButton() {
-        return createButton("Data Structures", new FrameMoveActiveListener(this, DataStructuresFrame.getInstance()));
+        return createButton(GRAPH_ALGORITHM_BUTTON_TEXT, new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
     }
 
     private void addComponents() {
         add(createGraphAlgorithmsButton());
-        //   add(createDataStructuresButton());
     }
 
     @Override
     public void setUp() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setLayout(new FlowLayout());
 
         addComponents();
-        setSize(100 * 4, 50 * 4);
+
+        setSize(FRAME_SIZE);
         setResizable(false);
         setVisible(true);
     }
