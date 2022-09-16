@@ -1,5 +1,6 @@
-package com.company.Graphs.Algorithms;
+package com.company.Graphs.Algorithms.ArbitraryGraphAlgoritm;
 
+import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Graph;
 

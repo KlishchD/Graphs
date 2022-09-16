@@ -1,8 +1,8 @@
 package com.company.Graphs;
 
-import com.company.Graphs.Algorithms.ConnectionCheckGraphAlgorithm;
+import com.company.Graphs.Algorithms.ArbitraryGraphAlgoritm.ConnectionCheckGraphAlgorithm;
 import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
-import com.company.Graphs.Algorithms.ShortestDistanceFromVertexCalculationGraphAlgorithm;
+import com.company.Graphs.Algorithms.ArbitraryGraphAlgoritm.ShortestDistanceFromVertexCalculationGraphAlgorithm;
 import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Errors.VertexAlreadyExistsException;
