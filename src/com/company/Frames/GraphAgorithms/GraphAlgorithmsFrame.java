@@ -11,6 +11,9 @@ import javax.swing.*;
 
 import static com.company.Frames.Utils.ButtonUtils.createButton;
 
+/**
+ * Window to select a graph algorithm
+ */
 public class GraphAlgorithmsFrame extends Frame {
     private static final GraphAlgorithmsFrame instance = new GraphAlgorithmsFrame();
 

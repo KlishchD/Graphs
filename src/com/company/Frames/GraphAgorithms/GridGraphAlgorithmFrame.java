@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 
 import static com.company.Frames.Utils.ButtonUtils.createButton;
 
+/**
+ * Window to render work of a graph algorithm and to manage it
+ */
 public class GridGraphAlgorithmFrame extends Frame {
     private static final GridGraphAlgorithmFrame instance = new GridGraphAlgorithmFrame();
     private static final Map<GridPoint.RelativePosition, String> arrowsForPath = new HashMap<>();
@@ -41,10 +44,6 @@ public class GridGraphAlgorithmFrame extends Frame {
 
     public GridAlgorithmManager getAlgorithmManager() {
         return algorithmManager;
-    }
-
-    public GridPoint.GridPointType getSelectType() {
-        return selectType;
     }
 
     public void setSelectType(GridPoint.GridPointType selectType) {
