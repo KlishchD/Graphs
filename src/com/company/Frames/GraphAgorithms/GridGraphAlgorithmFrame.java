@@ -1,8 +1,8 @@
 package com.company.Frames.GraphAgorithms;
 
 import com.company.Frames.Frame;
-import com.company.Frames.Listeners.GraphGridSelectCellActiveListener;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
+import com.company.Frames.Listeners.GraphGridSelectCellActiveListener;
 import com.company.Frames.Listeners.ShowAnotherMenuActiveListener;
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
 import com.company.Graphs.GridAlgorithmManager;
@@ -10,6 +10,7 @@ import com.company.Graphs.GridAlgorithmResult;
 import javafx.util.Pair;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
@@ -30,6 +31,26 @@ public class GridGraphAlgorithmFrame extends Frame {
         arrowsForPath.put(GridPoint.RelativePosition.ON_TOP, "↑");
         arrowsForPath.put(GridPoint.RelativePosition.ON_BOTTOM, "↓");
     }
+
+    private final Color FREE_GRID_POINT_COLOR = Color.WHITE;
+    private final Color VISITED_GRID_POINT = Color.ORANGE;
+    private final Color GRID_POINT_PART_OF_RESTORED_PATH_COLOR = Color.CYAN;
+
+    private final int GRID_BUTTON_BORDER_SIZE = 1;
+
+    private final String RESIZE_BUTTON_TEXT = "resize";
+    private final String FULL_CLEAR_BUTTON_TEXT = "full clear";
+    private final String CLEAR_BUTTON_TEXT = "clear";
+    private final String RUN_BUTTON_TEXT = "run";
+    private final String BACK_BUTTON_TEXT = "back";
+    private final String GRID_BUTTON_DEFAULT_TEXT = "";
+
+    private final Rectangle GRID_SIZE = new Rectangle(5, 40, getWidth() - 10, getHeight() - 80);
+    private final Rectangle CONTROLLER_SIZE = new Rectangle(0, 0, this.getWidth(), 35);
+    private final Dimension FRAME_SIZE = new Dimension((int) (0.95 * 1600), (int) (0.95 * 900));
+
+    private final int RESTORATION_PATH_ITERATIONS_DELAY = 30;
+    private final int ALGORITHM_WORK_ITERATION_RENDER_DELAY = 10;
 
     private final Map<GridPoint, JButton> buttons = new HashMap<>();
     private final GridAlgorithmManager algorithmManager = new GridAlgorithmManager();
@@ -69,8 +90,9 @@ public class GridGraphAlgorithmFrame extends Frame {
         JButton button = new JButton(" ");
         button.setOpaque(true);
         button.addActionListener(new GraphGridSelectCellActiveListener(row, col));
-        button.setBackground(Color.WHITE);
-        button.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+        button.setBackground(FREE_GRID_POINT_COLOR);
+        Border border = BorderFactory.createMatteBorder(GRID_BUTTON_BORDER_SIZE, GRID_BUTTON_BORDER_SIZE, GRID_BUTTON_BORDER_SIZE, GRID_BUTTON_BORDER_SIZE, Color.GRAY);
+        button.setBorder(border);
         buttons.put(new GridPoint(row, col), button);
         return button;
     }
@@ -91,8 +113,8 @@ public class GridGraphAlgorithmFrame extends Frame {
         JPanel field = new JPanel();
         field.setLayout(new GridLayout(rows, cols));
         createGridButtons(rows, cols).forEach(field::add);
-        field.setBounds(5, 40, this.getWidth() - 10, this.getHeight() - 80);
-        field.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+        field.setBounds(GRID_SIZE);
+        field.setBorder(BorderFactory.createLineBorder(FREE_GRID_POINT_COLOR, 2));
         return field;
     }
 
@@ -104,7 +126,7 @@ public class GridGraphAlgorithmFrame extends Frame {
      * @param cols new number of cols in a grid
      */
     public void changeNumberOfCells(int rows, int cols) {
-        this.remove(this.getContentPane().findComponentAt(5, 40));
+        this.remove(this.getContentPane().findComponentAt(GRID_SIZE.x, GRID_SIZE.y));
         this.add(createField(rows, cols));
         this.validate();
     }
@@ -114,24 +136,23 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private JButton createRizeGridButton() {
-        return createButton("resize", new ShowAnotherMenuActiveListener(GridResizingFrame.getInstance()));
+        return createButton(RESIZE_BUTTON_TEXT, new ShowAnotherMenuActiveListener(GridResizingFrame.getInstance()));
     }
 
     private JButton createFullClearGridButton() {
-        return createButton("full clear", e -> clearGrid());
+        return createButton(FULL_CLEAR_BUTTON_TEXT, e -> clearGrid());
     }
 
     private JButton createClearGridButton() {
-        return createButton("clear", e -> resetGridColorsExceptSelected());
+        return createButton(CLEAR_BUTTON_TEXT, e -> resetGridColorsExceptSelected());
     }
 
-
     private JButton createRunAlgorithmButton() {
-        return createButton("run", e -> runAlgorithm());
+        return createButton(RUN_BUTTON_TEXT, e -> runAlgorithm());
     }
 
     private JButton createBackButton() {
-        return createButton("back", e -> resetGrid(), new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
+        return createButton(BACK_BUTTON_TEXT, e -> resetGrid(), new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
     }
 
     private void updateButton(JButton button, Color background, String text) {
@@ -150,8 +171,8 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private void renderNextAlgorithmStep(GridPoint point) {
-        updateButton(buttons.get(point), Color.ORANGE, "");
-        sleep(10);
+        updateButton(buttons.get(point), VISITED_GRID_POINT, GRID_BUTTON_DEFAULT_TEXT);
+        sleep(ALGORITHM_WORK_ITERATION_RENDER_DELAY);
     }
 
     private void renderWorkOfAlgorithm(List<GridPoint> visited) {
@@ -171,13 +192,14 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private void renderNextRestorationOfPathStep(GridPoint from, GridPoint to) {
-        if (!algorithmManager.isPointSelected(to)) updateButton(buttons.get(to), Color.CYAN);
+        if (!algorithmManager.isPointSelected(to))
+            updateButton(buttons.get(to), GRID_POINT_PART_OF_RESTORED_PATH_COLOR);
         if (from == null) return;
         GridPoint.RelativePosition position = to.getRelativePosition(from);
-        String text = arrowsForPath.getOrDefault(position, "");
+        String text = arrowsForPath.getOrDefault(position, GRID_BUTTON_DEFAULT_TEXT);
         updateButton(buttons.get(from), text);
         this.repaint();
-        sleep(30);
+        sleep(RESTORATION_PATH_ITERATIONS_DELAY);
     }
 
     private void renderRestorationOfPath(List<Pair<GridPoint, GridPoint>> path) {
@@ -199,16 +221,16 @@ public class GridGraphAlgorithmFrame extends Frame {
 
     private void resetGrid() {
         for (JButton button : buttons.values()) {
-            button.setBackground(Color.WHITE);
-            button.setText(" ");
+            button.setBackground(FREE_GRID_POINT_COLOR);
+            button.setText(GRID_BUTTON_DEFAULT_TEXT);
         }
     }
 
     private void resetGridColorsExceptSelected() {
         for (Map.Entry<GridPoint, JButton> entry : buttons.entrySet()) {
-            entry.getValue().setText(" ");
+            entry.getValue().setText(GRID_BUTTON_DEFAULT_TEXT);
             if (algorithmManager.isPointSelected(entry.getKey())) continue;
-            entry.getValue().setBackground(Color.WHITE);
+            entry.getValue().setBackground(FREE_GRID_POINT_COLOR);
         }
     }
 
@@ -225,13 +247,13 @@ public class GridGraphAlgorithmFrame extends Frame {
         controllers.add(createClearGridButton());
         controllers.add(createRunAlgorithmButton());
         controllers.add(createBackButton());
-        controllers.setBounds(0, 0, this.getWidth(), 35);
+        controllers.setBounds(CONTROLLER_SIZE);
         return controllers;
     }
 
     @Override
     public void setUp() {
-        this.setSize((int) (0.95 * 1600), (int) (0.95 * 900));
+        this.setSize(FRAME_SIZE);
         this.setLayout(null);
         this.add(createControllers());
         this.setResizable(false);
