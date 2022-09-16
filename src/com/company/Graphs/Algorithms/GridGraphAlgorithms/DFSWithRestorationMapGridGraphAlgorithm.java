@@ -1,11 +1,17 @@
 package com.company.Graphs.Algorithms.GridGraphAlgorithms;
 
+import com.company.Graphs.Algorithms.GridGraphAlgorithmInterface;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Graph;
 
 import java.util.*;
 
-public class DFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorithm<Map<GridPoint, GridPoint>, GridPoint, Integer> {
+
+/**
+ * Class for running DFS algorithm from source points to finish points omitting blocks points
+ * Returns Map, where value represents point and key it parent
+ */
+public class DFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorithmInterface<Map<GridPoint, GridPoint>, GridPoint, Integer> {
     private final Set<GridPoint> visited = new HashSet<>();
     private Set<GridPoint> starts;
     private Set<GridPoint> finishes;
@@ -33,7 +39,11 @@ public class DFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorit
         }
     }
 
-
+    /**
+     * Runs DFS algorithm
+     * @param graph on which to run algorithm
+     * @return map, where value represents point and key it parent
+     */
     @Override
     public Map<GridPoint, GridPoint> run(Graph<GridPoint, Integer> graph) {
         Map<GridPoint, GridPoint> result = new LinkedHashMap<>();

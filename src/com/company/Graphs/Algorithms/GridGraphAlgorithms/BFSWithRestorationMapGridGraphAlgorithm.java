@@ -1,12 +1,19 @@
 package com.company.Graphs.Algorithms.GridGraphAlgorithms;
 
+import com.company.Graphs.Algorithms.GridGraphAlgorithmInterface;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Graph;
 import sun.misc.Queue;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
-public class BFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorithm<Map<GridPoint, GridPoint>, GridPoint, Integer> {
+/**
+ * Class for running BFS algorithm from source points to finish points omitting blocks points
+ */
+public class BFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorithmInterface<Map<GridPoint, GridPoint>, GridPoint, Integer> {
     private final Queue<GridPoint> queue = new Queue<>();
     private final Set<GridPoint> visited = new HashSet<>();
     private Set<GridPoint> starts;
@@ -49,6 +56,11 @@ public class BFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorit
         }
     }
 
+    /**
+     * Runs BFS algorithm
+     * @param graph on which to run algorithm
+     * @return map, where value represents point and key it parent
+     */
     @Override
     public Map<GridPoint, GridPoint> run(Graph<GridPoint, Integer> graph) {
         setUpQueue();
@@ -91,6 +103,4 @@ public class BFSWithRestorationMapGridGraphAlgorithm implements GridGraphAlgorit
     public void setBlocks(Set<GridPoint> blocks) {
         this.blocks = blocks;
     }
-
-
 }

@@ -7,6 +7,10 @@ import com.company.Graphs.Errors.NoSuchVertexException;
 
 import java.util.List;
 
+/**
+ * @param <T> Type of vertexId
+ * @param <E> Type of values in vertex
+ */
 public class UnDirectedGraph<T, E> extends AbstractGraph<T, E> {
     /**
      * Adds an edge between two vertexes
