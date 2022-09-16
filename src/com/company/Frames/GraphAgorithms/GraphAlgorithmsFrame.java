@@ -8,6 +8,7 @@ import com.company.Graphs.Algorithms.GridGraphAlgorithms.BFSWithRestorationMapGr
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.DFSWithRestorationMapGridGraphAlgorithm;
 
 import javax.swing.*;
+import java.awt.*;
 
 import static com.company.Frames.Utils.ButtonUtils.createButton;
 
@@ -16,27 +17,32 @@ import static com.company.Frames.Utils.ButtonUtils.createButton;
  */
 public class GraphAlgorithmsFrame extends Frame {
     private static final GraphAlgorithmsFrame instance = new GraphAlgorithmsFrame();
+    private final Dimension FRAME_SIZE = new Dimension(400, 200);
+    private final String BFS_BUTTON_TEXT = "BFS";
+    private final String DFS_BUTTON_TEXT = "DFS";
+    private final String BACK_BUTTON_TEXT = "Back";
 
-    private GraphAlgorithmsFrame() {}
+    private GraphAlgorithmsFrame() {
+    }
 
     static public GraphAlgorithmsFrame getInstance() {
         return instance;
     }
 
     private JButton createBFSButton() {
-        return createButton("BFS",
+        return createButton(BFS_BUTTON_TEXT,
                 new FrameMoveActiveListener(this, GridGraphAlgorithmFrame.getInstance()),
                 new SetGridGraphAlgorithm(new BFSWithRestorationMapGridGraphAlgorithm()));
     }
 
     private JButton createDFSButton() {
-        return createButton("DFS",
+        return createButton(DFS_BUTTON_TEXT,
                 new FrameMoveActiveListener(this, GridGraphAlgorithmFrame.getInstance()),
                 new SetGridGraphAlgorithm(new DFSWithRestorationMapGridGraphAlgorithm()));
     }
 
     private JButton createBackButton() {
-        return createButton("back", new FrameMoveActiveListener(this, MainFrame.getInstance()));
+        return createButton(BACK_BUTTON_TEXT, new FrameMoveActiveListener(this, MainFrame.getInstance()));
     }
 
     private void addComponents() {
@@ -49,7 +55,7 @@ public class GraphAlgorithmsFrame extends Frame {
     public void setUp() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
-        setSize(100 * 4, 100 * 2);
+        setSize(FRAME_SIZE);
         setVisible(false);
         addComponents();
     }
