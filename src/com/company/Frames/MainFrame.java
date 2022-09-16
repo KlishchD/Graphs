@@ -30,7 +30,7 @@ public class MainFrame extends Frame {
 
     private void addComponents() {
         add(createGraphAlgorithmsButton());
-        add(createDataStructuresButton());
+        //   add(createDataStructuresButton());
     }
 
     @Override
