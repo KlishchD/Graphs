@@ -14,8 +14,16 @@ import static com.company.Frames.Utils.ButtonUtils.createButton;
 
 public class GridResizingFrame extends Frame {
     private final static GridResizingFrame instance = new GridResizingFrame();
+
     private final DataCarrier<String> rowsInput = new DataCarrier<>("");
     private final DataCarrier<String> colsInput = new DataCarrier<>("");
+
+    private final String OK_BUTTON_TEXT = "OK";
+    private final String CANCEL_BUTTON_TEXT = "Cancel";
+    private final String COLS_NUMBER_LABEL_TEXT = "Cols:";
+    private final String ROWS_NUMBER_LABEL_TEXT = "Rows:";
+
+    private final Dimension FRAME_SIZE = new Dimension(400, 300);
 
     private GridResizingFrame() {
 
@@ -40,11 +48,11 @@ public class GridResizingFrame extends Frame {
     }
 
     private JButton createOkButton() {
-        return createButton("Ok", new OkButtonClickListener());
+        return createButton(OK_BUTTON_TEXT, new OkButtonClickListener());
     }
 
     private JButton createCancelButton() {
-        return createButton("Cancel", new HideMenuActiveListener(this));
+        return createButton(CANCEL_BUTTON_TEXT, new HideMenuActiveListener(this));
     }
 
     private JPanel createControlPanel() {
@@ -58,11 +66,11 @@ public class GridResizingFrame extends Frame {
     public void setUp() {
         setLayout(new GridLayout(3, 1));
 
-        add(createInputPanel("Cols:", colsInput));
-        add(createInputPanel("Rows:", rowsInput));
+        add(createInputPanel(COLS_NUMBER_LABEL_TEXT, colsInput));
+        add(createInputPanel(ROWS_NUMBER_LABEL_TEXT, rowsInput));
         add(createControlPanel());
 
-        setSize(400, 300);
+        setSize(FRAME_SIZE);
         setResizable(false);
         repaint();
     }
