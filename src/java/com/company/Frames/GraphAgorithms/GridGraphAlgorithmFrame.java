@@ -224,6 +224,7 @@ public class GridGraphAlgorithmFrame extends Frame {
             button.setBackground(FREE_GRID_POINT_COLOR);
             button.setText(GRID_BUTTON_DEFAULT_TEXT);
         }
+        algorithmManager.resetSelectedPoints();
     }
 
     private void resetFreeGridPointsVisualsExceptSelected() {
