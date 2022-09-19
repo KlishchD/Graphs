@@ -1,4 +1,4 @@
-package com.company.Graphs;
+package com.company.Graphs.Algorithms;
 
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
 import javafx.util.Pair;

@@ -1,7 +1,7 @@
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.BFSWithRestorationMapGridGraphAlgorithm;
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
-import com.company.Graphs.GridAlgorithmManager;
-import com.company.Graphs.GridAlgorithmResult;
+import com.company.Graphs.Algorithms.GridAlgorithmManager;
+import com.company.Graphs.Algorithms.GridAlgorithmResult;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 

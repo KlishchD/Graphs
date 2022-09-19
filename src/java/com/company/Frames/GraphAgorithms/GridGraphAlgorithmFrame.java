@@ -5,8 +5,8 @@ import com.company.Frames.Frame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.GraphGridSelectCellActiveListener;
 import com.company.Frames.Listeners.ShowAnotherMenuActiveListener;
-import com.company.Graphs.GridAlgorithmManager;
-import com.company.Graphs.GridAlgorithmResult;
+import com.company.Graphs.Algorithms.GridAlgorithmManager;
+import com.company.Graphs.Algorithms.GridAlgorithmResult;
 import javafx.util.Pair;
 
 import javax.swing.*;

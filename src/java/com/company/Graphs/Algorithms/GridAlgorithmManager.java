@@ -1,6 +1,5 @@
-package com.company.Graphs;
+package com.company.Graphs.Algorithms;
 
-import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
 import com.company.Graphs.Implementations.GridGraph;
 import javafx.util.Pair;
