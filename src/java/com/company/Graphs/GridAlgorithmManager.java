@@ -21,6 +21,14 @@ public class GridAlgorithmManager {
 
     public GridAlgorithmManager() {
     }
+    public GridAlgorithmManager(int rows, int cols) {
+        this.graph = new GridGraph(rows, cols);
+    }
+
+    public GridAlgorithmManager(int rows, int cols, GraphAlgorithmInterface<Map<GridPoint, GridPoint>, GridPoint, Integer> algorithm) {
+        this.graph = new GridGraph(rows, cols);
+        this.algorithm = algorithm;
+    }
 
     public GraphAlgorithmInterface<Map<GridPoint, GridPoint>, GridPoint, Integer> getAlgorithm() {
         return algorithm;

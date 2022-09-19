@@ -1,8 +1,8 @@
 package com.company.Graphs;
 
 import com.company.Graphs.Algorithms.ArbitraryGraphAlgoritm.ConnectionCheckGraphAlgorithm;
-import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Algorithms.ArbitraryGraphAlgoritm.ShortestDistanceFromVertexCalculationGraphAlgorithm;
+import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Errors.VertexAlreadyExistsException;
@@ -142,5 +142,23 @@ public abstract class AbstractGraph<T, E> implements GraphInterface<T, E> {
     @Override
     public int getEdgesNumber() {
         return connectionsMap.values().stream().mapToInt(List::size).sum();
+    }
+
+    /**
+     * @param vertexId id of an vertex to check
+     * @return true if vertex present and false otherwise
+     */
+    @Override
+    public boolean containsVertex(T vertexId) {
+        return vertexValuesMap.containsKey(vertexId);
+    }
+    /**
+     * @param firstVertex id of vertex where edge starts
+     * @param secondVertex id of vertex where edge ends
+     * @return true if edge is present and false if edge is not present (additionally false if one of vertexes is not present)
+     */
+    @Override
+    public boolean containsEdge(T firstVertex, T secondVertex) {
+        return vertexValuesMap.containsKey(firstVertex) && vertexValuesMap.containsKey(secondVertex) && connectionsMap.get(firstVertex).contains(secondVertex);
     }
 }

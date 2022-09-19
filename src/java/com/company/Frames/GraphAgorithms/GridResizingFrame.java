@@ -1,7 +1,7 @@
 package com.company.Frames.GraphAgorithms;
 
-import com.company.Frames.Frame;
 import com.company.Frames.Listeners.HideMenuActiveListener;
+import com.company.Frames.Frame;
 import com.company.Frames.Listeners.TextFieldListener;
 import com.company.Frames.Utils.DataCarrier;
 

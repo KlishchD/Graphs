@@ -1,8 +1,8 @@
 package com.company.Frames;
 
 import com.company.Frames.DataStuctures.DataStructuresFrame;
-import com.company.Frames.GraphAgorithms.GridGraphAlgorithmFrame;
 import com.company.Frames.GraphAgorithms.GraphAlgorithmsFrame;
+import com.company.Frames.GraphAgorithms.GridGraphAlgorithmFrame;
 import com.company.Frames.GraphAgorithms.GridResizingFrame;
 
 import java.util.Arrays;

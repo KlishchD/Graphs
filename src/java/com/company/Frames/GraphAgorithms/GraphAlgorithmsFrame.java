@@ -1,11 +1,11 @@
 package com.company.Frames.GraphAgorithms;
 
-import com.company.Frames.Frame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.SetGridGraphAlgorithm;
-import com.company.Frames.MainFrame;
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.BFSWithRestorationMapGridGraphAlgorithm;
 import com.company.Graphs.Algorithms.GridGraphAlgorithms.DFSWithRestorationMapGridGraphAlgorithm;
+import com.company.Frames.Frame;
+import com.company.Frames.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;

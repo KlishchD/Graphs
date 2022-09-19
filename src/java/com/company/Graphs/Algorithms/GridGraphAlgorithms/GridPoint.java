@@ -34,6 +34,14 @@ public class GridPoint implements Comparable<GridPoint> {
     }
 
     @Override
+    public String toString() {
+        return "GridPoint{" +
+                "row=" + row +
+                ", col=" + col +
+                '}';
+    }
+
+    @Override
     public int compareTo(GridPoint o) {
         if (equals(o)) return 0;
         if (col == o.col) return row - o.row;

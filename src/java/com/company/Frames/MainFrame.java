@@ -3,11 +3,10 @@ package com.company.Frames;
 
 import com.company.Frames.GraphAgorithms.GraphAlgorithmsFrame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
+import com.company.Frames.Utils.ButtonUtils;
 
 import javax.swing.*;
 import java.awt.*;
-
-import static com.company.Frames.Utils.ButtonUtils.createButton;
 
 /**
  * Main frame is a window which allows to select a type of algorithm to be watched or DataStructure, ...
@@ -26,7 +25,7 @@ public class MainFrame extends Frame {
     }
 
     private JButton createGraphAlgorithmsButton() {
-        return createButton(GRAPH_ALGORITHM_BUTTON_TEXT, new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
+        return ButtonUtils.createButton(GRAPH_ALGORITHM_BUTTON_TEXT, new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
     }
 
     private void addComponents() {

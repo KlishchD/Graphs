@@ -1,10 +1,10 @@
 package com.company.Frames.GraphAgorithms;
 
+import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
 import com.company.Frames.Frame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.GraphGridSelectCellActiveListener;
 import com.company.Frames.Listeners.ShowAnotherMenuActiveListener;
-import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
 import com.company.Graphs.GridAlgorithmManager;
 import com.company.Graphs.GridAlgorithmResult;
 import javafx.util.Pair;

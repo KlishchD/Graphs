@@ -1,9 +1,9 @@
 package com.company.Graphs.Algorithms.GridGraphAlgorithms;
 
+import com.company.Graphs.Implementations.GridGraph;
 import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.GraphInterface;
-import com.company.Graphs.Implementations.GridGraph;
 
 import java.util.*;
 
