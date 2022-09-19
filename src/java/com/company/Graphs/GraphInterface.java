@@ -12,7 +12,7 @@ import java.util.List;
  * @param <T> Type of vertexId
  * @param <E> Type of values in vertex
  */
-public interface Graph<T, E> {
+public interface GraphInterface<T, E> {
     /**
      * Adds an edge between two vertexes
      *
@@ -114,4 +114,17 @@ public interface Graph<T, E> {
      * @return number of edges in a graph
      */
     int getEdgesNumber();
+
+    /**
+     * @param vertexId id of an vertex to check
+     * @return true if vertex present and false otherwise
+     */
+    boolean containsVertex(T vertexId);
+
+    /**
+     * @param firstVertex id of vertex where edge starts
+     * @param secondVertex id of vertex where edge ends
+     * @return true if edge is present and false if edge is not present (additionally false if one of vertexes is not present)
+     */
+    boolean containsEdge(T firstVertex, T secondVertex);
 }

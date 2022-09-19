@@ -7,6 +7,10 @@ import com.company.Graphs.Errors.NoSuchVertexException;
 
 import java.util.List;
 
+/**
+ * @param <T> Type of vertexId
+ * @param <E> Type of values in vertex
+ */
 public class DirectedGraph<T, E> extends AbstractGraph<T, E> {
     /**
      * Adds an edge between two vertexes
@@ -64,7 +68,7 @@ public class DirectedGraph<T, E> extends AbstractGraph<T, E> {
      * @param vertexId id of a vertex
      * @throws NoSuchVertexException if specified vertex doesn't exist
      */
-    void deleteAllEdgesPointedToVertex(T vertexId) throws NoSuchVertexException {
+    public void removeAllEdgesPointedToVertex(T vertexId) throws NoSuchVertexException {
         if (!connectionsMap.containsKey(vertexId))
             throw new NoSuchVertexException("There is no such vertex " + vertexId);
         for (List<T> list : connectionsMap.values()) {
@@ -78,7 +82,7 @@ public class DirectedGraph<T, E> extends AbstractGraph<T, E> {
      * @param vertexId id of a vertex
      * @throws NoSuchVertexException if specified vertex doesn't exist
      */
-    void deleteAllEdgesPointedFromVertex(T vertexId) throws NoSuchVertexException {
+    public void removeAllEdgesPointedFromVertex(T vertexId) throws NoSuchVertexException {
         if (!connectionsMap.containsKey(vertexId))
             throw new NoSuchVertexException("There is no such vertex " + vertexId);
         connectionsMap.get(vertexId).clear();

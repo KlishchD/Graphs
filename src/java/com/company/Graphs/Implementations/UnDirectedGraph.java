@@ -5,8 +5,13 @@ import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchEdgeException;
 import com.company.Graphs.Errors.NoSuchVertexException;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @param <T> Type of vertexId
+ * @param <E> Type of values in vertex
+ */
 public class UnDirectedGraph<T, E> extends AbstractGraph<T, E> {
     /**
      * Adds an edge between two vertexes
@@ -66,10 +71,11 @@ public class UnDirectedGraph<T, E> extends AbstractGraph<T, E> {
      * @param vertexId id of a vertex
      * @throws NoSuchVertexException if a specified vertex doesn't exist
      */
-    void deleteAllEdgesForVertex(T vertexId) throws NoSuchVertexException {
+    public void removeAllEdgesForVertex(T vertexId) throws NoSuchVertexException {
         if (!connectionsMap.containsKey(vertexId))
             throw new NoSuchVertexException("There is no such vertex " + vertexId);
-        for (T vertex : connectionsMap.get(vertexId)) {
+        List<T> vertexes = new ArrayList<>(connectionsMap.get(vertexId));
+        for (T vertex : vertexes) {
             try {
                 removeEdge(vertex, vertexId);
             } catch (NoSuchEdgeException ignore) {
