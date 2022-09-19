@@ -54,7 +54,7 @@ public class GraphAlgorithmsFrame extends Frame {
     @Override
     public void setUp() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         setSize(FRAME_SIZE);
         setVisible(false);
         addComponents();
