@@ -45,9 +45,9 @@ public class GridGraphAlgorithmFrame extends Frame {
     private final String BACK_BUTTON_TEXT = "back";
     private final String GRID_BUTTON_DEFAULT_TEXT = "";
 
-    private final Rectangle GRID_SIZE = new Rectangle(5, 40, getWidth() - 10, getHeight() - 80);
-    private final Rectangle CONTROLLER_SIZE = new Rectangle(0, 0, this.getWidth(), 35);
     private final Dimension FRAME_SIZE = new Dimension((int) (0.95 * 1600), (int) (0.95 * 900));
+    private final Rectangle GRID_SIZE = new Rectangle(5, 40, FRAME_SIZE.width - 10, FRAME_SIZE.height - 80);
+    private final Rectangle CONTROLLER_SIZE = new Rectangle(0, 0, FRAME_SIZE.width, 35);
 
     private final int RESTORATION_PATH_ITERATIONS_DELAY = 30;
     private final int ALGORITHM_WORK_ITERATION_RENDER_DELAY = 10;
