@@ -1,6 +1,5 @@
 package com.company.Graphs.Implementations;
 
-import com.company.Graphs.AbstractGraph;
 import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchEdgeException;
 import com.company.Graphs.Errors.NoSuchVertexException;

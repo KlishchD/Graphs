@@ -1,4 +1,4 @@
-import com.company.Graphs.AbstractGraph;
+import com.company.Graphs.Implementations.AbstractGraph;
 import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Errors.VertexAlreadyExistsException;

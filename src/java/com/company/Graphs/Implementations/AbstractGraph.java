@@ -1,4 +1,4 @@
-package com.company.Graphs;
+package com.company.Graphs.Implementations;
 
 import com.company.Graphs.Algorithms.ArbitraryGraphAlgoritm.ConnectionCheckGraphAlgorithm;
 import com.company.Graphs.Algorithms.ArbitraryGraphAlgoritm.ShortestDistanceFromVertexCalculationGraphAlgorithm;
@@ -6,6 +6,7 @@ import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Errors.VertexAlreadyExistsException;
+import com.company.Graphs.GraphInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
