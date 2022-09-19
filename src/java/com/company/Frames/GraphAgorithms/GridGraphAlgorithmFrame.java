@@ -81,7 +81,7 @@ public class GridGraphAlgorithmFrame extends Frame {
         buttons.get(point).setOpaque(true);
         buttons.get(point).setBackground(selectType.getColor());
 
-        this.getContentPane().validate();
+        getContentPane().validate();
 
         algorithmManager.updatePointType(point, selectType);
     }
@@ -126,9 +126,9 @@ public class GridGraphAlgorithmFrame extends Frame {
      * @param cols new number of cols in a grid
      */
     public void changeNumberOfCells(int rows, int cols) {
-        this.remove(this.getContentPane().findComponentAt(GRID_SIZE.x, GRID_SIZE.y));
-        this.add(createField(rows, cols));
-        this.validate();
+        remove(getContentPane().findComponentAt(GRID_SIZE.x, GRID_SIZE.y));
+        add(createField(rows, cols));
+        validate();
     }
 
     private List<JButton> generateSelectTypeControllersButtons() {
@@ -162,12 +162,12 @@ public class GridGraphAlgorithmFrame extends Frame {
 
     private void updateButton(JButton button, String text) {
         button.setText(text);
-        this.repaint();
+        repaint();
     }
 
     private void updateButton(JButton button, Color background) {
         button.setBackground(background);
-        this.repaint();
+        repaint();
     }
 
     private void renderNextAlgorithmStep(GridPoint point) {
@@ -198,7 +198,7 @@ public class GridGraphAlgorithmFrame extends Frame {
         GridPoint.RelativePosition position = to.getRelativePosition(from);
         String text = arrowsForPath.getOrDefault(position, GRID_BUTTON_DEFAULT_TEXT);
         updateButton(buttons.get(from), text);
-        this.repaint();
+        repaint();
         sleep(RESTORATION_PATH_ITERATIONS_DELAY);
     }
 
@@ -254,11 +254,12 @@ public class GridGraphAlgorithmFrame extends Frame {
 
     @Override
     public void setUp() {
-        this.setSize(FRAME_SIZE);
-        this.setLayout(null);
-        this.add(createControllers());
-        this.setResizable(false);
-        this.setVisible(false);
-        this.repaint();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(FRAME_SIZE);
+        setLayout(null);
+        add(createControllers());
+        setResizable(false);
+        setVisible(false);
+        repaint();
     }
 }
