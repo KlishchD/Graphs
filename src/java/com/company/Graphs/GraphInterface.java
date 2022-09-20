@@ -6,7 +6,9 @@ import com.company.Graphs.Errors.NoSuchEdgeException;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Errors.VertexAlreadyExistsException;
 
+import java.awt.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @param <T> Type of vertexId
@@ -122,9 +124,94 @@ public interface GraphInterface<T, E> {
     boolean containsVertex(T vertexId);
 
     /**
-     * @param firstVertex id of vertex where edge starts
+     * @param firstVertex  id of vertex where edge starts
      * @param secondVertex id of vertex where edge ends
      * @return true if edge is present and false if edge is not present (additionally false if one of vertexes is not present)
      */
     boolean containsEdge(T firstVertex, T secondVertex);
+
+    /**
+     * Sets specified type for specified point
+     *
+     * @param point point to be added
+     * @param type  type of point to be added
+     */
+    void updatePointType(T point, PointType type);
+
+    /**
+     * @param point - point to check
+     * @return true if type of point is FREE, otherwise false
+     */
+    boolean isFreePoint(T point);
+
+    /**
+     * @param type - type of points to retrieve
+     * @return Set of points with specified type
+     */
+    Set<T> getPointsOfType(PointType type);
+
+    /**
+     * @param point point to check
+     * @return true if point is of type is not FREE
+     */
+    boolean isPointSelected(T point);
+
+    /**
+     * Sets FREE type to all points
+     */
+    void resetSelectedPoints();
+
+    enum PointType {
+        SOURCE {
+            @Override
+            public Color getColor() {
+                return Color.GREEN;
+            }
+
+            @Override
+            public String getName() {
+                return "Start";
+            }
+
+        }, FINISH {
+            @Override
+            public Color getColor() {
+                return Color.BLUE;
+            }
+
+            @Override
+            public String getName() {
+                return "Finish";
+            }
+
+        }, BLOCKS {
+            @Override
+            public Color getColor() {
+                return Color.BLACK;
+            }
+
+            @Override
+            public String getName() {
+                return "Block";
+            }
+        }, FREE {
+            @Override
+            public String getName() {
+                return "Free";
+            }
+
+            @Override
+            public Color getColor() {
+                return Color.WHITE;
+            }
+        };
+
+        public Color getColor() {
+            return null;
+        }
+
+        public String getName() {
+            return null;
+        }
+    }
 }

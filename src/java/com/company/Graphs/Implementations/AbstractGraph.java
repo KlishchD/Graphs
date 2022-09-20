@@ -8,10 +8,7 @@ import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Errors.VertexAlreadyExistsException;
 import com.company.Graphs.GraphInterface;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -19,8 +16,16 @@ import java.util.Map;
  * @param <E> Type of values in vertex
  */
 public abstract class AbstractGraph<T, E> implements GraphInterface<T, E> {
+    protected final Map<T, PointType> types = new HashMap<>();
+    private final Map<PointType, Set<T>> points = new HashMap<>();
     protected Map<T, List<T>> connectionsMap = new HashMap<>();
     protected Map<T, E> vertexValuesMap = new HashMap<>();
+
+    public AbstractGraph() {
+        for (PointType type : PointType.values()) {
+            points.put(type, new HashSet<>());
+        }
+    }
 
     /**
      * Adds a new vertex with a specific id and value
@@ -153,13 +158,66 @@ public abstract class AbstractGraph<T, E> implements GraphInterface<T, E> {
     public boolean containsVertex(T vertexId) {
         return vertexValuesMap.containsKey(vertexId);
     }
+
     /**
-     * @param firstVertex id of vertex where edge starts
+     * @param firstVertex  id of vertex where edge starts
      * @param secondVertex id of vertex where edge ends
      * @return true if edge is present and false if edge is not present (additionally false if one of vertexes is not present)
      */
     @Override
     public boolean containsEdge(T firstVertex, T secondVertex) {
         return vertexValuesMap.containsKey(firstVertex) && vertexValuesMap.containsKey(secondVertex) && connectionsMap.get(firstVertex).contains(secondVertex);
+    }
+
+
+    /**
+     * Sets specified type for specified point
+     *
+     * @param point point to be added
+     * @param type  type of point to be added
+     */
+    @Override
+    public void updatePointType(T point, PointType type) {
+        if (types.containsKey(point) && types.get(point) != type) points.get(types.get(point)).remove(point);
+        points.get(type).add(point);
+        types.put(point, type);
+    }
+
+    /**
+     * @param point - point to check
+     * @return true if type of point is FREE, otherwise false
+     */
+    @Override
+    public boolean isFreePoint(T point) {
+        return types.getOrDefault(point, PointType.FREE) == PointType.FREE;
+    }
+
+    /**
+     * @param type - type of points to retrieve
+     * @return Set of points with specified type
+     */
+    @Override
+    public Set<T> getPointsOfType(PointType type) {
+        return points.get(type);
+    }
+
+    /**
+     * @param point point to check
+     * @return true if point is of type is not FREE
+     */
+    @Override
+    public boolean isPointSelected(T point) {
+        return points.get(PointType.SOURCE).contains(point) || points.get(PointType.BLOCKS).contains(point) || points.get(PointType.FINISH).contains(point);
+
+    }
+
+    /**
+     * Sets FREE type to all points
+     */
+    public void resetSelectedPoints() {
+        for (PointType type : PointType.values()) {
+            points.get(type).clear();
+        }
+        types.clear();
     }
 }

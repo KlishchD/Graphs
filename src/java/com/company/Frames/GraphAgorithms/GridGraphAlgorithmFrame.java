@@ -1,12 +1,16 @@
 package com.company.Frames.GraphAgorithms;
 
-import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
 import com.company.Frames.Frame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.GraphGridSelectCellActiveListener;
 import com.company.Frames.Listeners.ShowAnotherMenuActiveListener;
-import com.company.Graphs.Algorithms.GridAlgorithmManager;
-import com.company.Graphs.Algorithms.GridAlgorithmResult;
+import com.company.Graphs.Algorithms.TraversAlgorithmsResult;
+import com.company.Graphs.Algorithms.TraversingAlgorithms.GraphTraversingAlgorithm;
+import com.company.Graphs.GraphInterface;
+import com.company.Graphs.GraphInterface.PointType;
+import com.company.Graphs.GridPoint;
+import com.company.Graphs.GridPoint.GridPointRelativePosition;
+import com.company.Graphs.Implementations.GridGraph;
 import javafx.util.Pair;
 
 import javax.swing.*;
@@ -23,13 +27,13 @@ import static com.company.Frames.Utils.ButtonUtils.createButton;
  */
 public class GridGraphAlgorithmFrame extends Frame {
     private static final GridGraphAlgorithmFrame instance = new GridGraphAlgorithmFrame();
-    private static final Map<GridPoint.RelativePosition, String> arrowsForPath = new HashMap<>();
+    private static final Map<GridPointRelativePosition, String> arrowsForPath = new HashMap<>();
 
     static {
-        arrowsForPath.put(GridPoint.RelativePosition.ON_LEFT, "→");
-        arrowsForPath.put(GridPoint.RelativePosition.ON_RIGHT, "←");
-        arrowsForPath.put(GridPoint.RelativePosition.ON_TOP, "↑");
-        arrowsForPath.put(GridPoint.RelativePosition.ON_BOTTOM, "↓");
+        arrowsForPath.put(GridPointRelativePosition.ON_LEFT, "→");
+        arrowsForPath.put(GridPointRelativePosition.ON_RIGHT, "←");
+        arrowsForPath.put(GridPointRelativePosition.ON_TOP, "↑");
+        arrowsForPath.put(GridPointRelativePosition.ON_BOTTOM, "↓");
     }
 
     private final Color FREE_GRID_POINT_COLOR = Color.WHITE;
@@ -53,8 +57,9 @@ public class GridGraphAlgorithmFrame extends Frame {
     private final int ALGORITHM_WORK_ITERATION_RENDER_DELAY = 10;
 
     private final Map<GridPoint, JButton> buttons = new HashMap<>();
-    private final GridAlgorithmManager algorithmManager = new GridAlgorithmManager();
-    private GridPoint.GridPointType selectType = GridPoint.GridPointType.SOURCE;
+    private PointType selectType = PointType.SOURCE;
+    private GraphInterface<GridPoint, Integer> graph = new GridGraph();
+    private GraphTraversingAlgorithm<GridPoint, Integer> algorithm;
 
     private GridGraphAlgorithmFrame() {
     }
@@ -63,11 +68,8 @@ public class GridGraphAlgorithmFrame extends Frame {
         return instance;
     }
 
-    public GridAlgorithmManager getAlgorithmManager() {
-        return algorithmManager;
-    }
 
-    public void setSelectType(GridPoint.GridPointType selectType) {
+    public void setSelectType(PointType selectType) {
         this.selectType = selectType;
     }
 
@@ -83,7 +85,7 @@ public class GridGraphAlgorithmFrame extends Frame {
 
         getContentPane().validate();
 
-        algorithmManager.updatePointType(point, selectType);
+        graph.updatePointType(point, selectType);
     }
 
     private JButton createGridButton(int row, int col) {
@@ -109,7 +111,7 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private JPanel createField(int rows, int cols) {
-        algorithmManager.resetGraph(rows, cols);
+        graph = new GridGraph(rows, cols);
         JPanel field = new JPanel();
         field.setLayout(new GridLayout(rows, cols));
         createGridButtons(rows, cols).forEach(field::add);
@@ -132,7 +134,7 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private List<JButton> generateSelectTypeControllersButtons() {
-        return Arrays.stream(GridPoint.GridPointType.values()).map(type -> createButton(type.getName(), e -> setSelectType(type))).collect(Collectors.toList());
+        return Arrays.stream(PointType.values()).map(type -> createButton(type.getName(), e -> setSelectType(type))).collect(Collectors.toList());
     }
 
     private JButton createRizeGridButton() {
@@ -192,10 +194,10 @@ public class GridGraphAlgorithmFrame extends Frame {
     }
 
     private void renderNextRestorationOfPathStep(GridPoint from, GridPoint to) {
-        if (!algorithmManager.isPointSelected(to))
+        if (!graph.isPointSelected(to))
             updateButton(buttons.get(to), GRID_POINT_PART_OF_RESTORED_PATH_COLOR);
         if (from == null) return;
-        GridPoint.RelativePosition position = to.getRelativePosition(from);
+        GridPointRelativePosition position = to.getRelativePosition(from);
         String text = arrowsForPath.getOrDefault(position, GRID_BUTTON_DEFAULT_TEXT);
         updateButton(buttons.get(from), text);
         repaint();
@@ -214,7 +216,8 @@ public class GridGraphAlgorithmFrame extends Frame {
 
     private void runAlgorithm() {
         resetFreeGridPointsVisualsExceptSelected();
-        GridAlgorithmResult result = algorithmManager.runAlgorithm();
+        Map<GridPoint, GridPoint> results = algorithm.run(graph);
+        TraversAlgorithmsResult<GridPoint> result = new TraversAlgorithmsResult<>(results, graph);
         renderWorkOfAlgorithm(result.getVisited());
         renderRestorationOfPath(result.getRestoredPaths());
     }
@@ -224,19 +227,19 @@ public class GridGraphAlgorithmFrame extends Frame {
             button.setBackground(FREE_GRID_POINT_COLOR);
             button.setText(GRID_BUTTON_DEFAULT_TEXT);
         }
-        algorithmManager.resetSelectedPoints();
+        graph.resetSelectedPoints();
     }
 
     private void resetFreeGridPointsVisualsExceptSelected() {
         for (Map.Entry<GridPoint, JButton> entry : buttons.entrySet()) {
             entry.getValue().setText(GRID_BUTTON_DEFAULT_TEXT);
-            if (algorithmManager.isPointSelected(entry.getKey())) continue;
+            if (graph.isPointSelected(entry.getKey())) continue;
             entry.getValue().setBackground(FREE_GRID_POINT_COLOR);
         }
     }
 
     public void clearGrid() {
-        algorithmManager.resetSelectedPoints();
+        graph.resetSelectedPoints();
         resetGrid();
     }
 
@@ -261,5 +264,9 @@ public class GridGraphAlgorithmFrame extends Frame {
         setResizable(false);
         setVisible(false);
         repaint();
+    }
+
+    public void setAlgorithm(GraphTraversingAlgorithm<GridPoint, Integer> algorithm) {
+        this.algorithm = algorithm;
     }
 }

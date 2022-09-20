@@ -1,11 +1,11 @@
 package com.company.Frames.GraphAgorithms;
 
-import com.company.Frames.Listeners.FrameMoveActiveListener;
-import com.company.Frames.Listeners.SetGridGraphAlgorithm;
-import com.company.Graphs.Algorithms.GridGraphAlgorithms.BFSWithRestorationMapGridGraphAlgorithm;
-import com.company.Graphs.Algorithms.GridGraphAlgorithms.DFSWithRestorationMapGridGraphAlgorithm;
 import com.company.Frames.Frame;
+import com.company.Frames.Listeners.FrameMoveActiveListener;
+import com.company.Frames.Listeners.SetTraversingGraphAlgorithmListener;
 import com.company.Frames.MainFrame;
+import com.company.Graphs.Algorithms.TraversingAlgorithms.BFSTraversingAlgorithm;
+import com.company.Graphs.Algorithms.TraversingAlgorithms.DFSTraversingAlgorithm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,13 +32,13 @@ public class GraphAlgorithmsFrame extends Frame {
     private JButton createBFSButton() {
         return createButton(BFS_BUTTON_TEXT,
                 new FrameMoveActiveListener(this, GridGraphAlgorithmFrame.getInstance()),
-                new SetGridGraphAlgorithm(new BFSWithRestorationMapGridGraphAlgorithm()));
+                new SetTraversingGraphAlgorithmListener(new BFSTraversingAlgorithm()));
     }
 
     private JButton createDFSButton() {
         return createButton(DFS_BUTTON_TEXT,
                 new FrameMoveActiveListener(this, GridGraphAlgorithmFrame.getInstance()),
-                new SetGridGraphAlgorithm(new DFSWithRestorationMapGridGraphAlgorithm()));
+                new SetTraversingGraphAlgorithmListener(new DFSTraversingAlgorithm()));
     }
 
     private JButton createBackButton() {
