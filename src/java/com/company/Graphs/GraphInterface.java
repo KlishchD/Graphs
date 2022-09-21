@@ -202,7 +202,7 @@ public interface GraphInterface<T, E> {
 
             @Override
             public Color getColor() {
-                return Color.WHITE;
+                return Color.DARK_GRAY;
             }
         };
 
