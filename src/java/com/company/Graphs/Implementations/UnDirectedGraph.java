@@ -3,6 +3,7 @@ package com.company.Graphs.Implementations;
 import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchEdgeException;
 import com.company.Graphs.Errors.NoSuchVertexException;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,20 @@ public class UnDirectedGraph<T, E> extends AbstractGraph<T, E> {
      */
     @Override
     public void addEdge(T firstVertex, T secondVertex) throws NoSuchVertexException, EdgeAlreadyExistsException {
+        addEdge(firstVertex, secondVertex, null);
+    }
+
+    /**
+     * Adds an edge between two vertexes with specified value
+     *
+     * @param firstVertex  first vertex
+     * @param secondVertex second vertex
+     * @param value        value of an edge
+     * @throws NoSuchVertexException      if firstVertex or secondVertex doesn't exist
+     * @throws EdgeAlreadyExistsException if an edge between firstVertex and secondVertex exists
+     */
+    @Override
+    public void addEdge(T firstVertex, T secondVertex, E value) throws NoSuchVertexException, EdgeAlreadyExistsException {
         if (!connectionsMap.containsKey(firstVertex))
             throw new NoSuchVertexException("There is no such vertex " + firstVertex);
         if (!connectionsMap.containsKey(secondVertex))
@@ -30,8 +45,9 @@ public class UnDirectedGraph<T, E> extends AbstractGraph<T, E> {
             throw new EdgeAlreadyExistsException("Edge between " + firstVertex + " and " + secondVertex + " already exists");
         connectionsMap.get(firstVertex).add(secondVertex);
         connectionsMap.get(secondVertex).add(firstVertex);
+        edgesValues.put(new Pair<>(firstVertex, secondVertex), value);
+        edgesValues.put(new Pair<>(secondVertex, firstVertex), value);
     }
-
     /**
      * Removes an edge between two vertexes
      *
@@ -50,6 +66,8 @@ public class UnDirectedGraph<T, E> extends AbstractGraph<T, E> {
             throw new NoSuchEdgeException("There is no such edge between " + firstVertex + " and " + secondVertex);
         connectionsMap.get(firstVertex).remove(secondVertex);
         connectionsMap.get(secondVertex).remove(firstVertex);
+        edgesValues.remove(new Pair<>(firstVertex, secondVertex));
+        edgesValues.remove(new Pair<>(secondVertex, firstVertex));
     }
 
     /**

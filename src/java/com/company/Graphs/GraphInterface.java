@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public interface GraphInterface<T, E> {
     /**
-     * Adds an edge between two vertexes
+     * Adds an edge between two vertexes with null value
      *
      * @param firstVertex  first vertex
      * @param secondVertex second vertex
@@ -24,6 +24,17 @@ public interface GraphInterface<T, E> {
      * @throws EdgeAlreadyExistsException if an edge between firstVertex and secondVertex exists
      */
     void addEdge(T firstVertex, T secondVertex) throws NoSuchVertexException, EdgeAlreadyExistsException;
+
+    /**
+     * Adds an edge between two vertexes with specified value
+     *
+     * @param firstVertex  first vertex
+     * @param secondVertex second vertex
+     * @param value        value of an edge
+     * @throws NoSuchVertexException      if firstVertex or secondVertex doesn't exist
+     * @throws EdgeAlreadyExistsException if an edge between firstVertex and secondVertex exists
+     */
+    void addEdge(T firstVertex, T secondVertex, E value) throws NoSuchVertexException, EdgeAlreadyExistsException;
 
     /**
      * Removes an edge between two vertexes
@@ -34,6 +45,14 @@ public interface GraphInterface<T, E> {
      * @throws NoSuchEdgeException   if an edge between firstVertex and secondVertex doesn't exists
      */
     void removeEdge(T firstVertex, T secondVertex) throws NoSuchVertexException, NoSuchEdgeException;
+
+    /**
+     * Adds a new vertex with a specific id and null value
+     *
+     * @param vertexId id of a new vertex
+     * @throws VertexAlreadyExistsException if a vertex with a specified id already exists
+     */
+    void addVertex(T vertexId) throws VertexAlreadyExistsException;
 
     /**
      * Adds a new vertex with a specific id and value
@@ -59,6 +78,14 @@ public interface GraphInterface<T, E> {
      * @throws NoSuchVertexException if a vertex with a specified id doesn't exist
      */
     E getVertexValue(T vertexId) throws NoSuchVertexException;
+
+        /**
+         * @param firstVertex  id of a first vertex
+         * @param secondVertex id of a second vertex
+         * @return value of an edge between a specified vertexes
+         * @throws NoSuchVertexException if a vertex with a specified id doesn't exist
+         */
+        E getEdgeValue(T firstVertex, T secondVertex) throws NoSuchVertexException;
 
     /**
      * @return list of all ids of vertexes in a graph

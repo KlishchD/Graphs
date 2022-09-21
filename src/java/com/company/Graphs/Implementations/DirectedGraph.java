@@ -3,6 +3,7 @@ package com.company.Graphs.Implementations;
 import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchEdgeException;
 import com.company.Graphs.Errors.NoSuchVertexException;
+import javafx.util.Pair;
 
 import java.util.List;
 
@@ -21,6 +22,19 @@ public class DirectedGraph<T, E> extends AbstractGraph<T, E> {
      */
     @Override
     public void addEdge(T firstVertex, T secondVertex) throws NoSuchVertexException, EdgeAlreadyExistsException {
+        addEdge(firstVertex, secondVertex, null);
+    }
+    /**
+     * Adds an edge between two vertexes with specified value
+     *
+     * @param firstVertex  first vertex
+     * @param secondVertex second vertex
+     * @param value        value of an edge
+     * @throws NoSuchVertexException      if firstVertex or secondVertex doesn't exist
+     * @throws EdgeAlreadyExistsException if an edge between firstVertex and secondVertex exists
+     */
+    @Override
+    public void addEdge(T firstVertex, T secondVertex, E value) throws NoSuchVertexException, EdgeAlreadyExistsException {
         if (!connectionsMap.containsKey(firstVertex))
             throw new NoSuchVertexException("There is no such vertex " + firstVertex);
         if (!connectionsMap.containsKey(secondVertex))
@@ -28,6 +42,7 @@ public class DirectedGraph<T, E> extends AbstractGraph<T, E> {
         if (connectionsMap.get(firstVertex).contains(secondVertex))
             throw new EdgeAlreadyExistsException("Edge between " + firstVertex + " and " + secondVertex + " already exists");
         connectionsMap.get(firstVertex).add(secondVertex);
+        edgesValues.put(new Pair<>(firstVertex, secondVertex), value);
     }
 
     /**
@@ -47,6 +62,7 @@ public class DirectedGraph<T, E> extends AbstractGraph<T, E> {
         if (!connectionsMap.get(firstVertex).contains(secondVertex))
             throw new NoSuchEdgeException("There is no such edge between " + firstVertex + " and " + secondVertex);
         connectionsMap.get(firstVertex).remove(secondVertex);
+        edgesValues.remove(new Pair<>(firstVertex, secondVertex));
     }
 
     /**

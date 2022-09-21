@@ -7,6 +7,7 @@ import com.company.Graphs.Errors.EdgeAlreadyExistsException;
 import com.company.Graphs.Errors.NoSuchVertexException;
 import com.company.Graphs.Errors.VertexAlreadyExistsException;
 import com.company.Graphs.GraphInterface;
+import javafx.util.Pair;
 
 import java.util.*;
 
@@ -20,6 +21,7 @@ public abstract class AbstractGraph<T, E> implements GraphInterface<T, E> {
     private final Map<PointType, Set<T>> points = new HashMap<>();
     protected Map<T, List<T>> connectionsMap = new HashMap<>();
     protected Map<T, E> vertexValuesMap = new HashMap<>();
+    protected Map<Pair<T, T>, E> edgesValues = new HashMap();
 
     public AbstractGraph() {
         for (PointType type : PointType.values()) {
@@ -39,6 +41,17 @@ public abstract class AbstractGraph<T, E> implements GraphInterface<T, E> {
             throw new VertexAlreadyExistsException("Vertex " + vertexId + " already exists");
         vertexValuesMap.put(vertexId, value);
         connectionsMap.put(vertexId, new ArrayList<>());
+    }
+
+    /**
+     * Adds a new vertex with a specific id and null value
+     *
+     * @param vertexId id of a new vertex
+     * @throws VertexAlreadyExistsException if a vertex with a specified id already exists
+     */
+    @Override
+    public void addVertex(T vertexId) throws VertexAlreadyExistsException {
+        addVertex(vertexId, null);
     }
 
     /**
@@ -220,4 +233,16 @@ public abstract class AbstractGraph<T, E> implements GraphInterface<T, E> {
         }
         types.clear();
     }
+
+    /**
+     * @param firstVertex  id of a first vertex
+     * @param secondVertex id of a second vertex
+     * @return value of an edge between a specified vertexes
+     * @throws NoSuchVertexException if a vertex with a specified id doesn't exist
+     */
+    @Override
+    public E getEdgeValue(T firstVertex, T secondVertex) throws NoSuchVertexException {
+        return edgesValues.get(new Pair<>(firstVertex, secondVertex));
+    }
+
 }
