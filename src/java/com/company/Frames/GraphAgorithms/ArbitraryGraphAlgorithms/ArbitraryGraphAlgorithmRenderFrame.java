@@ -142,7 +142,7 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
     protected void addEdge(String from, String to, Integer value) {
         Edge edge = new Edge(vertexes.get(from), vertexes.get(to), value);
         try {
-            graph.addEdge(from, to);
+            graph.addEdge(from, to, value);
             edges.put(new Pair<>(from, to), edge);
             add(edge);
             addEdgeValue(from, to, value);
