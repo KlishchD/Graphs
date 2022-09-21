@@ -58,7 +58,7 @@ public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraph
 
     private JList<String> createEdgesValuesList() {
         JList<String> list = new JList<>(listModel);
-        list.setSize(100, 1000);
+        list.setBounds(FRAME_SIZE.width - 100, 35, 100, 1000);
         return list;
     }
 
