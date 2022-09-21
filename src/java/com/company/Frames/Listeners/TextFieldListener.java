@@ -35,7 +35,7 @@ public class TextFieldListener implements DocumentListener {
         try {
             Document document = e.getDocument();
             String text = document.getText(0, document.getLength());
-            data.setValue(text, Integer.parseInt(text));
+            data.setValue(text);
         } catch (Exception ignored) {
         }
     }
