@@ -8,6 +8,7 @@ import com.company.Frames.RenderingFrame;
 import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Algorithms.TraversingAlgorithms.BFSTraversingAlgorithm;
 import com.company.Graphs.Algorithms.TraversingAlgorithms.DFSTraversingAlgorithm;
+import com.company.Graphs.Algorithms.TraversingAlgorithms.DijkstraTraversingAlgorithm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends Frame {
     private final Dimension FRAME_SIZE = new Dimension(400, 200);
     private final String BFS_BUTTON_TEXT = "BFS";
     private final String DFS_BUTTON_TEXT = "DFS";
+    private final String DIJKSTRA_BUTTON_TEXT = "Dijkstra";
     private final String BACK_BUTTON_TEXT = "Back";
 
     private ArbitraryGraphAlgorithmsSelectFrame() {
@@ -40,6 +42,12 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends Frame {
         return createButton(DFS_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()),
                 new SetTraversingGraphAlgorithmListener<>(new DFSTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()));
     }
+    private JButton createDijkstraButton() {
+        return createButton(DIJKSTRA_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()),
+                new SetTraversingGraphAlgorithmListener<>(new DijkstraTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()));
+    }
+
+
 
     private JButton createBackButton() {
         return createButton(BACK_BUTTON_TEXT, new FrameMoveActiveListener(this, MainFrame.getInstance()));
@@ -49,6 +57,7 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends Frame {
         add(createBFSButton());
         add(createDFSButton());
         add(createBackButton());
+        add(createDijkstraButton());
     }
 
     @Override
