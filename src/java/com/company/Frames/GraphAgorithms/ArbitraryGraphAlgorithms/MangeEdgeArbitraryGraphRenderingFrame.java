@@ -25,13 +25,13 @@ public class MangeEdgeArbitraryGraphRenderingFrame extends Frame {
 
     private JButton createAddEdgeButton() {
         return createButton("Add", e -> {
-            ArbitraryGraphAlgorithmRenderFrame.getInstance().addEdge(firstVertex.getValue(), secondVertex.getValue(), Integer.valueOf(value.getValue()));
+            ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().addEdge(firstVertex.getValue(), secondVertex.getValue(), Integer.valueOf(value.getValue()));
         });
     }
 
     private JButton createRemoveEdgeButton() {
         return createButton("Remove", e -> {
-            ArbitraryGraphAlgorithmRenderFrame.getInstance().removeEdge(firstVertex.getValue(), secondVertex.getValue());
+            ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().removeEdge(firstVertex.getValue(), secondVertex.getValue());
         });
     }
 

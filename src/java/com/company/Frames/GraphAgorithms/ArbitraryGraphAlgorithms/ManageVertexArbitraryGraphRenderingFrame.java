@@ -23,13 +23,13 @@ public class ManageVertexArbitraryGraphRenderingFrame extends Frame {
 
     private JButton createAddVertexButton() {
         return createButton("Add", e -> {
-            ArbitraryGraphAlgorithmRenderFrame.getInstance().addVertex(data.getValue());
+            ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().addVertex(data.getValue());
         });
     }
 
     private JButton createRemoveVertexButton() {
         return createButton("Remove", e -> {
-            ArbitraryGraphAlgorithmRenderFrame.getInstance().removeVertex(data.getValue());
+            ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().removeVertex(data.getValue());
         });
     }
 

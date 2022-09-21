@@ -28,7 +28,7 @@ public class Vertex extends JPanel {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ArbitraryGraphAlgorithmRenderFrame.getInstance().updatePointType(name);
+                ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().updatePointType(name);
             }
 
             @Override

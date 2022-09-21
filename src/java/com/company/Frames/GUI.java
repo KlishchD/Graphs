@@ -1,9 +1,6 @@
 package com.company.Frames;
 
-import com.company.Frames.GraphAgorithms.ArbitraryGraphAlgorithms.MangeEdgeArbitraryGraphRenderingFrame;
-import com.company.Frames.GraphAgorithms.ArbitraryGraphAlgorithms.ManageVertexArbitraryGraphRenderingFrame;
-import com.company.Frames.GraphAgorithms.ArbitraryGraphAlgorithms.ArbitraryGraphAlgorithmRenderFrame;
-import com.company.Frames.GraphAgorithms.ArbitraryGraphAlgorithms.ArbitraryGraphAlgorithmsSelectFrame;
+import com.company.Frames.GraphAgorithms.ArbitraryGraphAlgorithms.*;
 import com.company.Frames.GraphAgorithms.GridGrpahAlgorithms.GridGraphAlgorithmsSelectFrame;
 import com.company.Frames.GraphAgorithms.GridGrpahAlgorithms.GridGraphAlgorithmRenderingFrame;
 import com.company.Frames.GraphAgorithms.GridGrpahAlgorithms.GridResizingFrame;
@@ -19,7 +16,7 @@ public class GUI {
                 GridGraphAlgorithmRenderingFrame.getInstance(),
                 GridGraphAlgorithmRenderingFrame.getInstance(),
                 GridResizingFrame.getInstance(),
-                ArbitraryGraphAlgorithmRenderFrame.getInstance(),
+                ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance(),
                 ArbitraryGraphAlgorithmsSelectFrame.getInstance(),
                 ManageVertexArbitraryGraphRenderingFrame.getInstance(),
                 MangeEdgeArbitraryGraphRenderingFrame.getInstance()

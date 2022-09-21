@@ -33,4 +33,20 @@ public class Utils {
         panel.add(createInputTextField(input));
         return panel;
     }
+
+    public static void updateButton(JButton button, Color background, String text) {
+        updateButton(button, background);
+        updateButton(button, text);
+    }
+
+    public static void updateButton(JButton button, String text) {
+        button.setText(text);
+        button.repaint();
+    }
+
+    public static void updateButton(JButton button, Color background) {
+        button.setBackground(background);
+        button.repaint();
+    }
+
 }

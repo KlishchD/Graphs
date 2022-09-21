@@ -4,6 +4,8 @@ import com.company.Frames.Frame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.SetTraversingGraphAlgorithmListener;
 import com.company.Frames.MainFrame;
+import com.company.Frames.RenderingFrame;
+import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 import com.company.Graphs.Algorithms.TraversingAlgorithms.BFSTraversingAlgorithm;
 import com.company.Graphs.Algorithms.TraversingAlgorithms.DFSTraversingAlgorithm;
 
@@ -30,13 +32,13 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends Frame {
     }
 
     private JButton createBFSButton() {
-        return createButton(BFS_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphAlgorithmRenderFrame.getInstance()),
-                new SetTraversingGraphAlgorithmListener<>(new BFSTraversingAlgorithm<>(), ArbitraryGraphAlgorithmRenderFrame.getInstance()));
+        return createButton(BFS_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()),
+                new SetTraversingGraphAlgorithmListener<>(new BFSTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()));
     }
 
     private JButton createDFSButton() {
-        return createButton(DFS_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphAlgorithmRenderFrame.getInstance()),
-                new SetTraversingGraphAlgorithmListener<>(new DFSTraversingAlgorithm<>(), ArbitraryGraphAlgorithmRenderFrame.getInstance()));
+        return createButton(DFS_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()),
+                new SetTraversingGraphAlgorithmListener<>(new DFSTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()));
     }
 
     private JButton createBackButton() {
