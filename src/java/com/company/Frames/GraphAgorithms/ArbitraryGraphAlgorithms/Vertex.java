@@ -25,49 +25,8 @@ public class Vertex extends JPanel {
         this.name = name;
         setSize(width, height);
         setName(name);
-        addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().updatePointType(name);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                xPrevious = e.getXOnScreen();
-                yPrevious = e.getYOnScreen();
-                xMy = getX();
-                yMy = getY();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-        addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                int deltaX = e.getXOnScreen() - xPrevious;
-                int deltaY = e.getYOnScreen() - yPrevious;
-                setLocation(xMy + deltaX, yMy + deltaY);
-                fromEdges.forEach(Edge::moved);
-                toEdges.forEach(Edge::moved);
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-
-            }
-        });
+        addMouseListener(new PressingListener());
+        addMouseMotionListener(new DraggingListener());
     }
 
     public void addFromEdge(Edge edge) {
@@ -104,5 +63,51 @@ public class Vertex extends JPanel {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    private class PressingListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().updatePointType(name);
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            xPrevious = e.getXOnScreen();
+            yPrevious = e.getYOnScreen();
+            xMy = getX();
+            yMy = getY();
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+
+    }
+
+    private class DraggingListener implements MouseMotionListener {
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            int deltaX = e.getXOnScreen() - xPrevious;
+            int deltaY = e.getYOnScreen() - yPrevious;
+            setLocation(xMy + deltaX, yMy + deltaY);
+            fromEdges.forEach(Edge::moved);
+            toEdges.forEach(Edge::moved);
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+
+        }
     }
 }
