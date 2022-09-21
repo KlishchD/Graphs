@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vertex extends JPanel {
-    private final int width = 200;
-    private final int height = 100;
+    public static final int STROKE_WIDTH = 2;
+    private final int WIDTH_PER_CHARACTER = 7;
+    private final int NON_TEXT_WIDTH = 80;
+    private final int HEIGHT = 100;
     private final String name;
     private final List<Edge> fromEdges = new ArrayList<>();
     private final List<Edge> toEdges = new ArrayList<>();
@@ -20,13 +22,16 @@ public class Vertex extends JPanel {
     private volatile int yMy;
     private Color color = Color.BLACK;
 
-
     public Vertex(String name) {
         this.name = name;
-        setSize(width, height);
+        setSize(calculateWidth(name), HEIGHT);
         setName(name);
         addMouseListener(new PressingListener());
         addMouseMotionListener(new DraggingListener());
+    }
+
+    private int calculateWidth(String name) {
+        return NON_TEXT_WIDTH + WIDTH_PER_CHARACTER * name.length();
     }
 
     public void addFromEdge(Edge edge) {
@@ -45,15 +50,24 @@ public class Vertex extends JPanel {
         toEdges.remove(edge);
     }
 
+    public int getOvalWidth() {
+        return calculateWidth(name) - STROKE_WIDTH;
+    }
+
+    public int getOvalHeight() {
+        return HEIGHT;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
-        graphics.setStroke(new BasicStroke(2));
+        graphics.setStroke(new BasicStroke(STROKE_WIDTH));
         graphics.setColor(color);
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics.drawOval(0, 0, width, height);
+        graphics.drawOval(STROKE_WIDTH / 2, STROKE_WIDTH / 2, calculateWidth(name) - STROKE_WIDTH, HEIGHT - STROKE_WIDTH);
+        //graphics.drawOval(0, 0, getWidth(), getHeight());
         graphics.setColor(Color.BLACK);
-        graphics.drawString(name, width / 2 - 5 * name.length(), height / 2);
+        graphics.drawString(name, NON_TEXT_WIDTH / 2, HEIGHT / 2);
     }
 
     @Override

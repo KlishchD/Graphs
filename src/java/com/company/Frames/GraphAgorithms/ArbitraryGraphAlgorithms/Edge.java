@@ -30,8 +30,8 @@ public class Edge extends JPanel {
     }
 
     private Rectangle calculatePositionForLine() {
-        int x1 = from.getLocationOnScreen().x + from.getWidth() / 2;
-        int x2 = to.getLocationOnScreen().x + to.getWidth() / 2;
+        int x1 = from.getLocationOnScreen().x + from.getOvalWidth() / 2;
+        int x2 = to.getLocationOnScreen().x + to.getOvalWidth() / 2;
         int y1 = from.getLocationOnScreen().y;
         int y2 = to.getLocationOnScreen().y;
 
@@ -44,11 +44,11 @@ public class Edge extends JPanel {
         dx = dx / len;
         dy = dy / len;
 
-        double r1 = 0.5 * from.getWidth() * from.getHeight() / Math.sqrt(from.getWidth() * from.getWidth() * dy * dy + from.getHeight() * from.getHeight() * dx * dx);
+        double r1 = 0.5 * from.getOvalWidth() * from.getOvalHeight() / Math.sqrt(from.getOvalWidth() * from.getOvalWidth() * dy * dy + from.getOvalHeight() * from.getOvalHeight() * dx * dx);
         double rx1 = x1 + r1 * dx;
         double ry1 = y1 + r1 * dy;
 
-        double r2 = 0.5 * to.getWidth() * to.getHeight() / Math.sqrt(to.getWidth() * to.getWidth() * dy * dy + to.getHeight() * to.getHeight() * dx * dx);
+        double r2 = 0.5 * to.getOvalWidth() * to.getOvalHeight() / Math.sqrt(to.getOvalWidth() * to.getOvalWidth() * dy * dy + to.getOvalHeight() * to.getOvalHeight() * dx * dx);
         double rx2 = x2 - r2 * dx;
         double ry2 = y2 - r2 * dy;
 
