@@ -80,12 +80,12 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
     }
 
 
-    private void addEdgeValue(String from, String to, Integer value) {
-        ((DefaultListModel<String>) listModel).addElement("(" + from + ", " + to + ") <->" + value);
+    private void addEdgeValue(Edge edge) {
+        ((DefaultListModel<String>) listModel).addElement(edge.toString());
     }
 
-    private void removeEdgeValue(String from, String to, Integer value) {
-        ((DefaultListModel<String>) listModel).removeElement("(" + from + ", " + to + ") <->" + value);
+    private void removeEdgeValue(Edge edge) {
+        ((DefaultListModel<String>) listModel).removeElement(edge.toString());
     }
 
     protected void addVertex(String name) {
@@ -119,7 +119,7 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
             vertexes.get(edge.getValue()).removeToEdge(edges.get(edge));
             graph.removeEdge(edge.getKey(), edge.getValue());
             remove(edges.get(edge));
-            removeEdgeValue(edge.getKey(), edge.getValue(), edges.get(edge).getValue());
+            removeEdgeValue(edges.get(edge));
             edges.remove(edge);
         } catch (NoSuchVertexException | NoSuchEdgeException e) {
             e.printStackTrace();
@@ -145,7 +145,7 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
             graph.addEdge(from, to, value);
             edges.put(new Pair<>(from, to), edge);
             add(edge);
-            addEdgeValue(from, to, value);
+            addEdgeValue(edge);
         } catch (NoSuchVertexException | EdgeAlreadyExistsException e) {
             e.printStackTrace();
         }

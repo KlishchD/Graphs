@@ -124,4 +124,9 @@ public class Vertex extends JPanel {
 
         }
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -85,4 +85,9 @@ public class Edge extends JPanel {
         graphics.setColor(Color.GREEN);
         graphics.drawLine(getLeftX(), getTopY(), getRightX(), getBottomY());
     }
+
+    @Override
+    public String toString() {
+        return "(" + from + ", " + to + ") <-> " + value;
+    }
 }
