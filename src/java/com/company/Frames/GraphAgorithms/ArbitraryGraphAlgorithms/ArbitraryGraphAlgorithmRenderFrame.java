@@ -37,17 +37,110 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
     protected ArbitraryGraphAlgorithmRenderFrame() {
     }
 
-    private JButton createClearGridButton() {
-        return createButton(CLEAR_BUTTON_TEXT, e -> resetVertexesVisuals());
-    }
-
     protected abstract void resetVertexesVisuals();
 
-    private JButton createBackButton() {
-        return createButton(BACK_BUTTON_TEXT, e -> resetVertexes(), new FrameMoveActiveListener(this, ArbitraryGraphAlgorithmsSelectFrame.getInstance()));
+    protected abstract void resetVertexes();
+
+    protected abstract void resetField();
+
+    protected void addEdge(String from, String to, Integer value) {
+        try {
+            addEdgeWithoutExceptionHandling(from, to, value);
+        } catch (NoSuchVertexException | EdgeAlreadyExistsException e) {
+            e.printStackTrace();
+        }
     }
 
-    protected abstract void resetVertexes();
+    protected void removeVertex(String name) {
+        try {
+            removeVertexWithoutExceptionHandling(name);
+        } catch (NoSuchVertexException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void removeEdge(String firstVertex, String secondVertex) {
+        removeEdge(new Pair<>(firstVertex, secondVertex));
+    }
+
+    protected void removeEdge(Pair<String, String> edge) {
+        try {
+            removeEdgeWithoutExceptionHandling(edge);
+        } catch (NoSuchVertexException | NoSuchEdgeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected JPanel createController() {
+        JPanel controllers = new JPanel();
+        controllers.add(createFullClearGridButton());
+        controllers.add(createClearGridButton());
+        controllers.add(createRunAlgorithmButton());
+        controllers.add(createBackButton());
+        controllers.add(createManageVertexButton());
+        controllers.add(createManageEdgeButton());
+        return controllers;
+    }
+
+    protected void addVertex(String name) {
+        try {
+            addVertexWithoutExceptionHandling(name);
+        } catch (VertexAlreadyExistsException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeEdgesForVertex(String name) {
+        Set<Pair<String, String>> edgesToRemove = edges.keySet().stream().filter(pair -> pair.getKey().equals(name) || pair.getValue().equals(name)).collect(Collectors.toSet());
+        removeEdges(edgesToRemove);
+    }
+
+    private void addEdgeValue(Edge edge) {
+        ((DefaultListModel<String>) listModel).addElement(edge.toString());
+    }
+
+    private void removeEdgeValue(Edge edge) {
+        ((DefaultListModel<String>) listModel).removeElement(edge.toString());
+    }
+
+    private void addVertexWithoutExceptionHandling(String name) throws VertexAlreadyExistsException {
+        Vertex vertex = new Vertex(name);
+        graph.addVertex(vertex.getName(), 0);
+        vertexes.put(vertex.getName(), vertex);
+        add(vertex);
+        repaint();
+    }
+
+    private void removeVertexWithoutExceptionHandling(String name) throws NoSuchVertexException {
+        removeEdgesForVertex(name);
+        remove(vertexes.get(name));
+        vertexes.remove(name);
+        graph.removeVertex(name);
+        repaint();
+    }
+
+    private void addEdgeWithoutExceptionHandling(String from, String to, Integer value) throws NoSuchVertexException, EdgeAlreadyExistsException {
+        Edge edge = new Edge(vertexes.get(from), vertexes.get(to), value);
+        graph.addEdge(from, to, value);
+        edges.put(new Pair<>(from, to), edge);
+        add(edge);
+        addEdgeValue(edge);
+        repaint();
+    }
+
+    private void removeEdgeWithoutExceptionHandling(Pair<String, String> edge) throws NoSuchVertexException, NoSuchEdgeException {
+        vertexes.get(edge.getKey()).removeFromEdge(edges.get(edge));
+        vertexes.get(edge.getValue()).removeToEdge(edges.get(edge));
+        graph.removeEdge(edge.getKey(), edge.getValue());
+        remove(edges.get(edge));
+        removeEdgeValue(edges.get(edge));
+        edges.remove(edge);
+        repaint();
+    }
+
+    private void removeEdges(Set<Pair<String, String>> edges) {
+        edges.forEach(this::removeEdge);
+    }
 
     private JButton createManageVertexButton() {
         return createButton(MANAGE_VERTEX_BUTTON, new ShowAnotherMenuActiveListener(ManageVertexArbitraryGraphRenderingFrame.getInstance()));
@@ -66,91 +159,11 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
         return createButton(FULL_CLEAR_BUTTON_TEXT, e -> resetField());
     }
 
-    protected abstract void resetField();
-
-    protected JPanel createController() {
-        JPanel controllers = new JPanel();
-        controllers.add(createFullClearGridButton());
-        controllers.add(createClearGridButton());
-        controllers.add(createRunAlgorithmButton());
-        controllers.add(createBackButton());
-        controllers.add(createManageVertexButton());
-        controllers.add(createManageEdgeButton());
-        return controllers;
+    private JButton createClearGridButton() {
+        return createButton(CLEAR_BUTTON_TEXT, e -> resetVertexesVisuals());
     }
 
-
-    private void addEdgeValue(Edge edge) {
-        ((DefaultListModel<String>) listModel).addElement(edge.toString());
+    private JButton createBackButton() {
+        return createButton(BACK_BUTTON_TEXT, e -> resetVertexes(), new FrameMoveActiveListener(this, ArbitraryGraphAlgorithmsSelectFrame.getInstance()));
     }
-
-    private void removeEdgeValue(Edge edge) {
-        ((DefaultListModel<String>) listModel).removeElement(edge.toString());
-    }
-
-    protected void addVertex(String name) {
-        Vertex vertex = new Vertex(name);
-        try {
-            graph.addVertex(vertex.getName(), 0);
-            vertexes.put(vertex.getName(), vertex);
-            add(vertex);
-        } catch (VertexAlreadyExistsException e) {
-            e.printStackTrace();
-        }
-        repaint();
-    }
-
-    private void removeEdgesForVertex(String name) {
-        Set<Pair<String, String>> edgesToRemove = edges.keySet().stream().filter(pair -> pair.getKey().equals(name) || pair.getValue().equals(name)).collect(Collectors.toSet());
-        removeEdges(edgesToRemove);
-    }
-
-    private void removeEdges(Set<Pair<String, String>> edges) {
-        edges.forEach(this::removeEdge);
-    }
-
-    protected void removeEdge(String firstVertex, String secondVertex) {
-        removeEdge(new Pair<>(firstVertex, secondVertex));
-    }
-
-    protected void removeEdge(Pair<String, String> edge) {
-        try {
-            vertexes.get(edge.getKey()).removeFromEdge(edges.get(edge));
-            vertexes.get(edge.getValue()).removeToEdge(edges.get(edge));
-            graph.removeEdge(edge.getKey(), edge.getValue());
-            remove(edges.get(edge));
-            removeEdgeValue(edges.get(edge));
-            edges.remove(edge);
-        } catch (NoSuchVertexException | NoSuchEdgeException e) {
-            e.printStackTrace();
-        }
-        repaint();
-    }
-
-    protected void removeVertex(String name) {
-        try {
-            removeEdgesForVertex(name);
-            remove(vertexes.get(name));
-            vertexes.remove(name);
-            graph.removeVertex(name);
-        } catch (NoSuchVertexException e) {
-            e.printStackTrace();
-        }
-        repaint();
-    }
-
-    protected void addEdge(String from, String to, Integer value) {
-        Edge edge = new Edge(vertexes.get(from), vertexes.get(to), value);
-        try {
-            graph.addEdge(from, to, value);
-            edges.put(new Pair<>(from, to), edge);
-            add(edge);
-            addEdgeValue(edge);
-        } catch (NoSuchVertexException | EdgeAlreadyExistsException e) {
-            e.printStackTrace();
-        }
-        repaint();
-    }
-
-
 }
