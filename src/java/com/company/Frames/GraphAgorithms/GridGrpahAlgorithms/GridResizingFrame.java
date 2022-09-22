@@ -32,6 +32,18 @@ public class GridResizingFrame extends Frame {
         return instance;
     }
 
+    public void setUp() {
+        setLayout(new GridLayout(3, 1));
+
+        add(createInputPanel(COLS_NUMBER_LABEL_TEXT, colsInput));
+        add(createInputPanel(ROWS_NUMBER_LABEL_TEXT, rowsInput));
+        add(createControlPanel());
+
+        setSize(FRAME_SIZE);
+        setResizable(false);
+        repaint();
+    }
+
     private JButton createOkButton() {
         return createButton(OK_BUTTON_TEXT, new OkButtonClickListener());
     }
@@ -46,18 +58,6 @@ public class GridResizingFrame extends Frame {
         panel.add(createOkButton());
         panel.add(createCancelButton());
         return panel;
-    }
-
-    public void setUp() {
-        setLayout(new GridLayout(3, 1));
-
-        add(createInputPanel(COLS_NUMBER_LABEL_TEXT, colsInput));
-        add(createInputPanel(ROWS_NUMBER_LABEL_TEXT, rowsInput));
-        add(createControlPanel());
-
-        setSize(FRAME_SIZE);
-        setResizable(false);
-        repaint();
     }
 
     private class OkButtonClickListener implements ActionListener {

@@ -27,6 +27,68 @@ public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraph
         return instance;
     }
 
+    @Override
+    protected void runAlgorithm() {
+        resetVertexesVisuals();
+        Map<String, String> results = algorithm.run(graph);
+        TraversAlgorithmsResult<String> result = new TraversAlgorithmsResult<>(results, graph);
+        renderWorkOfAlgorithm(result.getVisited());
+        renderRestorationOfPath(result.getRestoredPaths());
+    }
+
+    /**
+     * Sets type of point in a graph to a selected type by a user
+     * Additionally, updates visual state of a point corresponding to a point type
+     *
+     * @param point point to be updated
+     */
+    public void updatePointType(String point) {
+        updatePointType(point, selectType);
+    }
+
+    @Override
+    public void setUp() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(FRAME_SIZE);
+        setLayout(null);
+        add(createController());
+        add(createEdgesValuesList());
+        setResizable(false);
+        setVisible(false);
+        repaint();
+    }
+
+    @Override
+    protected JPanel createController() {
+        JPanel controller = super.createController();
+        controller.setBounds(CONTROLLER_SIZE);
+        generateSelectTypeControllersButtons().forEach(controller::add);
+        return controller;
+    }
+
+    @Override
+    protected void resetVertexes() {
+        resetVertexes(vertexes.keySet());
+    }
+
+    @Override
+    protected void resetField() {
+        graph = new UnDirectedGraph<>();
+
+        vertexes.values().forEach(this::remove);
+        vertexes.clear();
+
+        edges.values().forEach(this::remove);
+        edges.clear();
+
+        repaint();
+    }
+
+    @Override
+    protected void resetVertexesVisuals() {
+        Set<String> nonSelectedVertexes = vertexes.keySet().stream().filter(x -> !graph.isPointSelected(x)).collect(Collectors.toSet());
+        resetVertexes(nonSelectedVertexes);
+    }
 
     private List<JButton> generateSelectTypeControllersButtons() {
         return Arrays.stream(GraphInterface.PointType.values()).map(type -> createButton(type.getName(), e -> setSelectType(type))).collect(Collectors.toList());
@@ -38,16 +100,6 @@ public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraph
 
     public void setSelectType(GraphInterface.PointType selectType) {
         this.selectType = selectType;
-    }
-
-    /**
-     * Sets type of point in a graph to a selected type by a user
-     * Additionally, updates visual state of a point corresponding to a point type
-     *
-     * @param point point to be updated
-     */
-    public void updatePointType(String point) {
-        updatePointType(point, selectType);
     }
 
     private void updatePointType(String point, GraphInterface.PointType type) {
@@ -98,57 +150,6 @@ public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraph
                 }
             }
         }).start();
-    }
-
-    @Override
-    protected void runAlgorithm() {
-        resetVertexesVisuals();
-        Map<String, String> results = algorithm.run(graph);
-        TraversAlgorithmsResult<String> result = new TraversAlgorithmsResult<>(results, graph);
-        renderWorkOfAlgorithm(result.getVisited());
-        renderRestorationOfPath(result.getRestoredPaths());
-    }
-
-    @Override
-    protected JPanel createController() {
-        JPanel controller = super.createController();
-        controller.setBounds(CONTROLLER_SIZE);
-        generateSelectTypeControllersButtons().forEach(controller::add);
-        return controller;
-    }
-
-    @Override
-    public void setUp() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(FRAME_SIZE);
-        setLayout(null);
-        add(createController());
-        add(createEdgesValuesList());
-        setResizable(false);
-        setVisible(false);
-        repaint();
-    }
-    @Override
-    protected void resetVertexes() {
-        resetVertexes(vertexes.keySet());
-    }
-
-    @Override
-    protected void resetField() {
-        graph = new UnDirectedGraph<>();
-
-        vertexes.values().forEach(this::remove);
-        vertexes.clear();
-
-        edges.values().forEach(this::remove);
-        edges.clear();
-
-        repaint();
-    }
-    @Override
-    protected void resetVertexesVisuals() {
-        Set<String> nonSelectedVertexes = vertexes.keySet().stream().filter(x -> !graph.isPointSelected(x)).collect(Collectors.toSet());
-        resetVertexes(nonSelectedVertexes);
     }
 
     private void resetVertexes(Set<String> vertexes) {

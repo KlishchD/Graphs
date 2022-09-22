@@ -21,6 +21,16 @@ public class ManageVertexArbitraryGraphRenderingFrame extends Frame {
         return instance;
     }
 
+    @Override
+    public void setUp() {
+        setSize(300, 150);
+        setResizable(false);
+        setVisible(false);
+        setLayout(new GridLayout(2, 1));
+        add(createInputPanel("Vertex name: ", data));
+        add(createControlPanel());
+    }
+
     private JButton createAddVertexButton() {
         return createButton("Add", e -> {
             ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().addVertex(data.getValue());
@@ -35,26 +45,14 @@ public class ManageVertexArbitraryGraphRenderingFrame extends Frame {
 
     private JButton createCancelButton() {
         return createButton("Cancel", new HideMenuActiveListener(this));
-
     }
 
     private JPanel createControlPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 3 ));
+        panel.setLayout(new GridLayout(1, 3));
         panel.add(createAddVertexButton());
         panel.add(createRemoveVertexButton());
         panel.add(createCancelButton());
         return panel;
-    }
-
-
-    @Override
-    public void setUp() {
-        setSize(300, 150);
-        setResizable(false);
-        setVisible(false);
-        setLayout(new GridLayout(2, 1));
-        add(createInputPanel("Vertex name: ", data));
-        add(createControlPanel());
     }
 }

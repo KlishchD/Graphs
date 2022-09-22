@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vertex extends JPanel {
-    public static final int STROKE_WIDTH = 2;
+    private static final int STROKE_WIDTH = 2;
     private final int WIDTH_PER_CHARACTER = 7;
     private final int NON_TEXT_WIDTH = 80;
     private final int HEIGHT = 100;

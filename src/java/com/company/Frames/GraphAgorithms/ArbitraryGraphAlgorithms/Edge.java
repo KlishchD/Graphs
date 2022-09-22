@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Edge extends JPanel {
+    private static final int STROKE_WIDTH = 2;
     private final Vertex from;
     private final Vertex to;
     private int value;
@@ -29,6 +30,12 @@ public class Edge extends JPanel {
         this.value = value;
     }
 
+    private double calculateRadius(double dx, double dy, Vertex vertex) {
+        double top = 0.5 * vertex.getOvalWidth() * vertex.getOvalHeight();
+        double bottom = Math.sqrt(vertex.getOvalWidth() * vertex.getOvalWidth() * dy * dy + vertex.getOvalHeight() * vertex.getOvalHeight() * dx * dx);
+        return top / bottom;
+    }
+
     private Rectangle calculatePositionForLine() {
         int x1 = from.getLocationOnScreen().x + from.getOvalWidth() / 2;
         int x2 = to.getLocationOnScreen().x + to.getOvalWidth() / 2;
@@ -44,15 +51,15 @@ public class Edge extends JPanel {
         dx = dx / len;
         dy = dy / len;
 
-        double r1 = 0.5 * from.getOvalWidth() * from.getOvalHeight() / Math.sqrt(from.getOvalWidth() * from.getOvalWidth() * dy * dy + from.getOvalHeight() * from.getOvalHeight() * dx * dx);
+        double r1 = calculateRadius(dx, dy, from);
         double rx1 = x1 + r1 * dx;
         double ry1 = y1 + r1 * dy;
 
-        double r2 = 0.5 * to.getOvalWidth() * to.getOvalHeight() / Math.sqrt(to.getOvalWidth() * to.getOvalWidth() * dy * dy + to.getOvalHeight() * to.getOvalHeight() * dx * dx);
+        double r2 = calculateRadius(dx, dy, to);
         double rx2 = x2 - r2 * dx;
         double ry2 = y2 - r2 * dy;
 
-        return new Rectangle((int) Math.min(rx1, rx2), (int) Math.min(ry1, ry2), (int) Math.abs(rx1 - rx2), Math.max(3, (int) Math.abs(ry1 - ry2)));
+        return new Rectangle((int) Math.min(rx1, rx2), (int) Math.min(ry1, ry2), (int) Math.abs(rx1 - rx2), Math.max(STROKE_WIDTH, (int) Math.abs(ry1 - ry2)));
     }
 
     public void moved() {
@@ -79,7 +86,7 @@ public class Edge extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
-        graphics.setStroke(new BasicStroke(3));
+        graphics.setStroke(new BasicStroke(STROKE_WIDTH));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         graphics.setColor(Color.GREEN);

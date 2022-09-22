@@ -23,6 +23,18 @@ public class MangeEdgeArbitraryGraphRenderingFrame extends Frame {
         return instance;
     }
 
+    @Override
+    public void setUp() {
+        setSize(300, 150);
+        setResizable(false);
+        setVisible(false);
+        setLayout(new GridLayout(4, 1));
+        add(createInputPanel("First vertex name: ", firstVertex));
+        add(createInputPanel("Second vertex name: ", secondVertex));
+        add(createInputPanel("Vertex value: ", value));
+        add(createControlPanel());
+    }
+
     private JButton createAddEdgeButton() {
         return createButton("Add", e -> {
             ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().addEdge(firstVertex.getValue(), secondVertex.getValue(), Integer.valueOf(value.getValue()));
@@ -46,17 +58,5 @@ public class MangeEdgeArbitraryGraphRenderingFrame extends Frame {
         panel.add(createRemoveEdgeButton());
         panel.add(createCancelButton());
         return panel;
-    }
-
-    @Override
-    public void setUp() {
-        setSize(300, 150);
-        setResizable(false);
-        setVisible(false);
-        setLayout(new GridLayout(4, 1));
-        add(createInputPanel("First vertex name: ", firstVertex));
-        add(createInputPanel("Second vertex name: ", secondVertex));
-        add(createInputPanel("Vertex value: ", value));
-        add(createControlPanel());
     }
 }

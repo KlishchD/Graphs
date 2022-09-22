@@ -30,13 +30,10 @@ public class GridGraphAlgorithmsSelectFrame extends AlgorithmSelectFrame {
         return instance;
     }
 
-    private JButton createBackButton() {
-        return createButton(BACK_BUTTON_TEXT, new FrameMoveActiveListener(this, MainFrame.getInstance()));
-    }
-
-    private void addComponents() {
-        algorithmSelectButton.forEach(this::add);
-        add(createBackButton());
+    @Override
+    public <P, T, E> void registerAlgorithm(String name, GraphAlgorithmInterface<P, T, E> algorithm, RenderingFrame<P, T, E> frame) {
+        JButton button = createButton(name, new FrameMoveActiveListener(this, frame), new SetGraphAlgorithmListener<>(algorithm, frame));
+        algorithmSelectButton.add(button);
     }
 
     @Override
@@ -48,9 +45,12 @@ public class GridGraphAlgorithmsSelectFrame extends AlgorithmSelectFrame {
         addComponents();
     }
 
-    @Override
-    public <P, T, E> void registerAlgorithm(String name, GraphAlgorithmInterface<P, T, E> algorithm, RenderingFrame<P, T, E> frame) {
-        JButton button = createButton(name, new FrameMoveActiveListener(this, frame), new SetGraphAlgorithmListener<>(algorithm, frame));
-        algorithmSelectButton.add(button);
+    private JButton createBackButton() {
+        return createButton(BACK_BUTTON_TEXT, new FrameMoveActiveListener(this, MainFrame.getInstance()));
+    }
+
+    private void addComponents() {
+        algorithmSelectButton.forEach(this::add);
+        add(createBackButton());
     }
 }
