@@ -24,7 +24,7 @@ import static com.company.Frames.Utils.Utils.updateButton;
 /**
  * Window to render work of a graph algorithm and to manage it
  */
-public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<GridPoint, Integer> {
+public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<Map<GridPoint, GridPoint>, GridPoint, Integer> {
     private static final GridGraphAlgorithmRenderingFrame instance = new GridGraphAlgorithmRenderingFrame();
     private static final Map<GridPointRelativePosition, String> arrowsForPath = new HashMap<>();
 

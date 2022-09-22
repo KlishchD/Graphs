@@ -9,7 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static com.company.Frames.Utils.Utils.*;
+import static com.company.Frames.Utils.Utils.createButton;
+import static com.company.Frames.Utils.Utils.createInputPanel;
 
 public class GridResizingFrame extends Frame {
     private final static GridResizingFrame instance = new GridResizingFrame();
@@ -25,7 +26,6 @@ public class GridResizingFrame extends Frame {
     private final Dimension FRAME_SIZE = new Dimension(400, 300);
 
     private GridResizingFrame() {
-
     }
 
     public static GridResizingFrame getInstance() {

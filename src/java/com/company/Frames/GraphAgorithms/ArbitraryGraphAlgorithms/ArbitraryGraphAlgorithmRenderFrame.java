@@ -22,7 +22,7 @@ import static com.company.Frames.Utils.Utils.createButton;
 /**
  * Window to render work of a graph algorithm and to manage it
  */
-public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<String, Integer> {
+public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<Map<String, String>, String, Integer> {
     protected final Map<String, Vertex> vertexes = new HashMap<>();
     protected final Map<Pair<String, String>, Edge> edges = new HashMap<>();
     protected final ListModel<String> listModel = new DefaultListModel<>();

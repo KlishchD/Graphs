@@ -1,28 +1,27 @@
 package com.company.Frames.GraphAgorithms.ArbitraryGraphAlgorithms;
 
-import com.company.Frames.Frame;
+import com.company.Frames.AlgorithmSelectFrame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
-import com.company.Frames.Listeners.SetTraversingGraphAlgorithmListener;
+import com.company.Frames.Listeners.SetGraphAlgorithmListener;
 import com.company.Frames.MainFrame;
-import com.company.Graphs.Algorithms.TraversingAlgorithms.BFSTraversingAlgorithm;
-import com.company.Graphs.Algorithms.TraversingAlgorithms.DFSTraversingAlgorithm;
-import com.company.Graphs.Algorithms.TraversingAlgorithms.DijkstraTraversingAlgorithm;
+import com.company.Frames.RenderingFrame;
+import com.company.Graphs.Algorithms.GraphAlgorithmInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.company.Frames.Utils.Utils.createButton;
 
 /**
  * Window to select a graph algorithm
  */
-public class ArbitraryGraphAlgorithmsSelectFrame extends Frame {
+public class ArbitraryGraphAlgorithmsSelectFrame extends AlgorithmSelectFrame {
     private static final ArbitraryGraphAlgorithmsSelectFrame instance = new ArbitraryGraphAlgorithmsSelectFrame();
     private final Dimension FRAME_SIZE = new Dimension(400, 200);
-    private final String BFS_BUTTON_TEXT = "BFS";
-    private final String DFS_BUTTON_TEXT = "DFS";
-    private final String DIJKSTRA_BUTTON_TEXT = "Dijkstra";
     private final String BACK_BUTTON_TEXT = "Back";
+    private final List<JButton> algorithms = new ArrayList<>();
 
     private ArbitraryGraphAlgorithmsSelectFrame() {
     }
@@ -31,30 +30,18 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends Frame {
         return instance;
     }
 
-    private JButton createBFSButton() {
-        return createButton(BFS_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()),
-                new SetTraversingGraphAlgorithmListener<>(new BFSTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()));
+    @Override
+    public <P, T, E> void registerAlgorithm(String name, GraphAlgorithmInterface<P, T, E> algorithm, RenderingFrame<P, T, E> frame) {
+        JButton button = createButton(name, new FrameMoveActiveListener(this, frame), new SetGraphAlgorithmListener<>(algorithm, frame));
+        algorithms.add(button);
     }
-
-    private JButton createDFSButton() {
-        return createButton(DFS_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()),
-                new SetTraversingGraphAlgorithmListener<>(new DFSTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()));
-    }
-
-    private JButton createDijkstraButton() {
-        return createButton(DIJKSTRA_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()),
-                new SetTraversingGraphAlgorithmListener<>(new DijkstraTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance()));
-    }
-
 
     private JButton createBackButton() {
         return createButton(BACK_BUTTON_TEXT, new FrameMoveActiveListener(this, MainFrame.getInstance()));
     }
 
     private void addComponents() {
-        add(createBFSButton());
-        add(createDFSButton());
-        add(createDijkstraButton());
+        algorithms.forEach(this::add);
         add(createBackButton());
     }
 
