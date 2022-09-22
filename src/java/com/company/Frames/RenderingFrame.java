@@ -5,6 +5,12 @@ import com.company.Graphs.GraphInterface;
 
 import java.awt.*;
 
+
+/**
+ * @param <P> return type of algorithm
+ * @param <T> type of vertex ids in graph
+ * @param <E> type of values in vertex and edge
+ */
 public abstract class RenderingFrame<P, T, E> extends Frame {
     protected final Color VISITED_POINT_COLOR = Color.ORANGE;
     protected final Color POINT_PART_OF_RESTORED_PATH_COLOR = Color.CYAN;
@@ -15,6 +21,9 @@ public abstract class RenderingFrame<P, T, E> extends Frame {
         this.algorithm = algorithm;
     }
 
+    /**
+     * Runs specified algorithm and renders it
+     */
     protected abstract void runAlgorithm();
 
     @Override

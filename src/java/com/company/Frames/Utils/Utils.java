@@ -20,12 +20,25 @@ public class Utils {
         return button;
     }
 
+    /**
+     * Creates text field and attaches DataCarrier class to which all changes in field will be written
+     *
+     * @param input DataCarrier object to attach
+     * @return JTextField object with attached DataCarrier object
+     */
     public static JTextField createInputTextField(DataCarrier<String> input) {
         JTextField textField = new JTextField();
         textField.getDocument().addDocumentListener(new TextFieldListener(input));
         return textField;
     }
 
+    /**
+     * Creates label for input text field and input text itself
+     *
+     * @param text  text on label
+     * @param input DataCarrier object to attach to input text field
+     * @return JPanel containing label and input field
+     */
     public static JPanel createInputPanel(String text, DataCarrier<String> input) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 2));

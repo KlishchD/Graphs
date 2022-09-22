@@ -115,6 +115,9 @@ public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<Map<GridPoi
         repaint();
     }
 
+    /**
+     * Clears all visuals and select types
+     */
     public void clearGrid() {
         graph.resetSelectedPoints();
         resetGrid();
