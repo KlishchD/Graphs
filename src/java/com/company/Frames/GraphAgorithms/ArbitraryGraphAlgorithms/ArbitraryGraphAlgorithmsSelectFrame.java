@@ -36,15 +36,6 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends AlgorithmSelectFrame {
         algorithms.add(button);
     }
 
-    private JButton createBackButton() {
-        return createButton(BACK_BUTTON_TEXT, new FrameMoveActiveListener(this, MainFrame.getInstance()));
-    }
-
-    private void addComponents() {
-        algorithms.forEach(this::add);
-        add(createBackButton());
-    }
-
     @Override
     public void setUp() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,5 +43,14 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends AlgorithmSelectFrame {
         setSize(FRAME_SIZE);
         setVisible(false);
         addComponents();
+    }
+
+    private JButton createBackButton() {
+        return createButton(BACK_BUTTON_TEXT, new FrameMoveActiveListener(this, MainFrame.getInstance()));
+    }
+
+    private void addComponents() {
+        algorithms.forEach(this::add);
+        add(createBackButton());
     }
 }
