@@ -10,6 +10,7 @@ import com.company.Graphs.Algorithms.TraversingAlgorithms.DijkstraTraversingAlgo
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class GUI {
     public static void start() {
@@ -24,6 +25,10 @@ public class GUI {
                 ManageVertexArbitraryGraphRenderingFrame.getInstance(),
                 MangeEdgeArbitraryGraphRenderingFrame.getInstance()
         );
+
+        MainFrame.getInstance().registerSelectFrame("Grid Graph Algorithms", GridGraphAlgorithmsSelectFrame.getInstance());
+        MainFrame.getInstance().registerSelectFrame("Arbitrary Graph Algorithms", ArbitraryGraphAlgorithmsSelectFrame.getInstance());
+
 
         ArbitraryGraphAlgorithmsSelectFrame.getInstance().registerAlgorithm("BFS", new BFSTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance());
         ArbitraryGraphAlgorithmsSelectFrame.getInstance().registerAlgorithm("DFS", new DFSTraversingAlgorithm<>(), ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance());

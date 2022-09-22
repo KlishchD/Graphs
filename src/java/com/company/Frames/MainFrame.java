@@ -1,23 +1,22 @@
 package com.company.Frames;
 
 
-import com.company.Frames.GraphAgorithms.ArbitraryGraphAlgorithms.ArbitraryGraphAlgorithmsSelectFrame;
-import com.company.Frames.GraphAgorithms.GridGrpahAlgorithms.GridGraphAlgorithmsSelectFrame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
-import com.company.Frames.Utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.company.Frames.Utils.Utils.createButton;
 
 /**
  * Main frame is a window which allows to select a type of algorithm to be watched or DataStructure, ...
  */
 public class MainFrame extends Frame {
     private static final MainFrame instance = new MainFrame();
-
     private final Dimension FRAME_SIZE = new Dimension(400, 200);
-    private final String GRID_GRAPH_ALGORITHM_BUTTON_TEXT = "Grid Graph Algorithms";
-    private final String ARBITRARY_GRAPH_ALGORITHM_BUTTON_TEXT = "Arbitrary Graph Algorithms";
+    private final List<JButton> selectFrameButton = new ArrayList<>();
 
     private MainFrame() {
     }
@@ -26,17 +25,12 @@ public class MainFrame extends Frame {
         return instance;
     }
 
-    private JButton createGridGraphAlgorithmsButton() {
-        return Utils.createButton(GRID_GRAPH_ALGORITHM_BUTTON_TEXT, new FrameMoveActiveListener(this, GridGraphAlgorithmsSelectFrame.getInstance()));
-    }
-
-    private JButton createArbitraryGraphAlgorithmsButton() {
-        return Utils.createButton(ARBITRARY_GRAPH_ALGORITHM_BUTTON_TEXT, new FrameMoveActiveListener(this, ArbitraryGraphAlgorithmsSelectFrame.getInstance()));
+    public void registerSelectFrame(String name, AlgorithmSelectFrame frame) {
+        selectFrameButton.add(createButton(name, new FrameMoveActiveListener(this, frame)));
     }
 
     private void addComponents() {
-        add(createGridGraphAlgorithmsButton());
-        add(createArbitraryGraphAlgorithmsButton());
+        selectFrameButton.forEach(this::add);
     }
 
     @Override
