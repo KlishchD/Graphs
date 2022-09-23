@@ -24,10 +24,14 @@ public abstract class RenderingFrame<P, T, E> extends Frame {
     /**
      * Runs specified algorithm and renders it
      */
-    protected abstract void runAlgorithm();
+    public abstract void runAlgorithm();
 
     @Override
-    public void setUp() {
+    public abstract void setUp();
 
-    }
+    public abstract void resetVisuals();
+
+    public abstract void resetField();
+
+    public abstract void resetVertexes();
 }
