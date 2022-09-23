@@ -135,6 +135,6 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame<P> extends RenderingFra
     }
 
     private JButton createManageEdgeButton() {
-        return createButton(MANAGE_EDGE_BUTTON, new ShowAnotherMenuActiveListener(MangeEdgeArbitraryGraphRenderingFrame.getInstance()));
+        return createButton(MANAGE_EDGE_BUTTON, new ShowAnotherMenuActiveListener(ManageEdgeArbitraryGraphRenderingFrame.getInstance()));
     }
 }
