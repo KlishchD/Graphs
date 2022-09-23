@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static com.company.Frames.Utils.Utils.createButton;
 
-public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraphAlgorithmRenderFrame {
+public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraphAlgorithmRenderFrame<Map<String, String>> {
     private static final ArbitraryGraphTraversingAlgorithmRenderFrame instance = new ArbitraryGraphTraversingAlgorithmRenderFrame();
     private final int RESTORATION_PATH_ITERATIONS_DELAY = 40;
     private final int ALGORITHM_WORK_ITERATION_RENDER_DELAY = 10;
@@ -28,8 +28,8 @@ public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraph
     }
 
     @Override
-    protected void runAlgorithm() {
-        resetVertexesVisuals();
+    public void runAlgorithm() {
+        resetVisuals();
         Map<String, String> results = algorithm.run(graph);
         TraversAlgorithmsResult<String> result = new TraversAlgorithmsResult<>(results, graph);
         renderWorkOfAlgorithm(result.getVisited());
@@ -67,12 +67,12 @@ public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraph
     }
 
     @Override
-    protected void resetVertexes() {
+    public void resetVertexes() {
         resetVertexes(vertexes.keySet());
     }
 
     @Override
-    protected void resetField() {
+    public void resetField() {
         graph = new UnDirectedGraph<>();
 
         vertexes.values().forEach(this::remove);
@@ -85,7 +85,7 @@ public class ArbitraryGraphTraversingAlgorithmRenderFrame extends ArbitraryGraph
     }
 
     @Override
-    protected void resetVertexesVisuals() {
+    public void resetVisuals() {
         Set<String> nonSelectedVertexes = vertexes.keySet().stream().filter(x -> !graph.isPointSelected(x)).collect(Collectors.toSet());
         resetVertexes(nonSelectedVertexes);
     }
