@@ -1,6 +1,5 @@
 package com.company.Frames.GraphAgorithms.ArbitraryGraphAlgorithms;
 
-import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.ShowAnotherMenuActiveListener;
 import com.company.Frames.RenderingFrame;
 import com.company.Graphs.Errors.EdgeAlreadyExistsException;
@@ -18,30 +17,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.company.Frames.Utils.Utils.createButton;
+import static com.company.Frames.Utils.Utils.creteBasicRenderingFrameController;
 
 /**
  * Window to render work of a graph algorithm and to manage it
  */
-public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<Map<String, String>, String, Integer> {
+public abstract class ArbitraryGraphAlgorithmRenderFrame<P> extends RenderingFrame<P, String, Integer> {
     protected final Map<String, Vertex> vertexes = new HashMap<>();
     protected final Map<Pair<String, String>, Edge> edges = new HashMap<>();
     protected final ListModel<String> listModel = new DefaultListModel<>();
-    protected final String FULL_CLEAR_BUTTON_TEXT = "full clear";
-    protected final String CLEAR_BUTTON_TEXT = "clear";
-    protected final String RUN_BUTTON_TEXT = "run";
-    protected final String BACK_BUTTON_TEXT = "back";
     protected final String MANAGE_VERTEX_BUTTON = "Manage vertexes";
     protected final String MANAGE_EDGE_BUTTON = "Manage edges";
     protected GraphInterface<String, Integer> graph = new UnDirectedGraph<>();
 
     protected ArbitraryGraphAlgorithmRenderFrame() {
     }
-
-    protected abstract void resetVertexesVisuals();
-
-    protected abstract void resetVertexes();
-
-    protected abstract void resetField();
 
     protected void addEdge(String from, String to, Integer value) {
         try {
@@ -72,11 +62,7 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
     }
 
     protected JPanel createController() {
-        JPanel controllers = new JPanel();
-        controllers.add(createFullClearGridButton());
-        controllers.add(createClearGridButton());
-        controllers.add(createRunAlgorithmButton());
-        controllers.add(createBackButton());
+        JPanel controllers = creteBasicRenderingFrameController(this, ArbitraryGraphAlgorithmsSelectFrame.getInstance());
         controllers.add(createManageVertexButton());
         controllers.add(createManageEdgeButton());
         return controllers;
@@ -123,6 +109,7 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
         Edge edge = new Edge(vertexes.get(from), vertexes.get(to), value);
         graph.addEdge(from, to, value);
         edges.put(new Pair<>(from, to), edge);
+        edges.put(new Pair<>(to, from), edge);
         add(edge);
         addEdgeValue(edge);
         repaint();
@@ -132,6 +119,7 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
         vertexes.get(edge.getKey()).removeFromEdge(edges.get(edge));
         vertexes.get(edge.getValue()).removeToEdge(edges.get(edge));
         graph.removeEdge(edge.getKey(), edge.getValue());
+        graph.removeEdge(edge.getValue(), edge.getKey());
         remove(edges.get(edge));
         removeEdgeValue(edges.get(edge));
         edges.remove(edge);
@@ -148,22 +136,5 @@ public abstract class ArbitraryGraphAlgorithmRenderFrame extends RenderingFrame<
 
     private JButton createManageEdgeButton() {
         return createButton(MANAGE_EDGE_BUTTON, new ShowAnotherMenuActiveListener(MangeEdgeArbitraryGraphRenderingFrame.getInstance()));
-    }
-
-    private JButton createRunAlgorithmButton() {
-        return createButton(RUN_BUTTON_TEXT, e -> runAlgorithm());
-    }
-
-
-    private JButton createFullClearGridButton() {
-        return createButton(FULL_CLEAR_BUTTON_TEXT, e -> resetField());
-    }
-
-    private JButton createClearGridButton() {
-        return createButton(CLEAR_BUTTON_TEXT, e -> resetVertexesVisuals());
-    }
-
-    private JButton createBackButton() {
-        return createButton(BACK_BUTTON_TEXT, e -> resetVertexes(), new FrameMoveActiveListener(this, ArbitraryGraphAlgorithmsSelectFrame.getInstance()));
     }
 }
