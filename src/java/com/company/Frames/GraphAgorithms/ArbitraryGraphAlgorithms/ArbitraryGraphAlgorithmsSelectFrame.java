@@ -22,6 +22,7 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends AlgorithmSelectFrame {
     private final Dimension FRAME_SIZE = new Dimension(400, 200);
     private final String BACK_BUTTON_TEXT = "Back";
     private final List<JButton> algorithms = new ArrayList<>();
+    private ArbitraryGraphAlgorithmRenderFrame<Object> renderer;
 
     private ArbitraryGraphAlgorithmsSelectFrame() {
     }
@@ -30,9 +31,13 @@ public class ArbitraryGraphAlgorithmsSelectFrame extends AlgorithmSelectFrame {
         return instance;
     }
 
+    public ArbitraryGraphAlgorithmRenderFrame<Object> getRenderer() {
+        return renderer;
+    }
+
     @Override
     public <P, T, E> void registerAlgorithm(String name, GraphAlgorithmInterface<P, T, E> algorithm, RenderingFrame<P, T, E> frame) {
-        JButton button = createButton(name, new FrameMoveActiveListener(this, frame), new SetGraphAlgorithmListener<>(algorithm, frame));
+        JButton button = createButton(name, new FrameMoveActiveListener(this, frame), new SetGraphAlgorithmListener<>(algorithm, frame), e -> renderer = (ArbitraryGraphAlgorithmRenderFrame<Object>) frame);
         algorithms.add(button);
     }
 
