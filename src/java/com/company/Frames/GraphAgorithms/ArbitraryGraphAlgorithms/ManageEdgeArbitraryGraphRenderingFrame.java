@@ -10,16 +10,16 @@ import java.awt.*;
 import static com.company.Frames.Utils.Utils.createButton;
 import static com.company.Frames.Utils.Utils.createInputPanel;
 
-public class MangeEdgeArbitraryGraphRenderingFrame extends Frame {
-    private static final MangeEdgeArbitraryGraphRenderingFrame instance = new MangeEdgeArbitraryGraphRenderingFrame();
+public class ManageEdgeArbitraryGraphRenderingFrame extends Frame {
+    private static final ManageEdgeArbitraryGraphRenderingFrame instance = new ManageEdgeArbitraryGraphRenderingFrame();
     private final DataCarrier<String> firstVertex = new DataCarrier<>("");
     private final DataCarrier<String> secondVertex = new DataCarrier<>("");
     private final DataCarrier<String> value = new DataCarrier<>("");
 
-    private MangeEdgeArbitraryGraphRenderingFrame() {
+    private ManageEdgeArbitraryGraphRenderingFrame() {
     }
 
-    public static MangeEdgeArbitraryGraphRenderingFrame getInstance() {
+    public static ManageEdgeArbitraryGraphRenderingFrame getInstance() {
         return instance;
     }
 
@@ -37,13 +37,13 @@ public class MangeEdgeArbitraryGraphRenderingFrame extends Frame {
 
     private JButton createAddEdgeButton() {
         return createButton("Add", e -> {
-            ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().addEdge(firstVertex.getValue(), secondVertex.getValue(), Integer.valueOf(value.getValue()));
+            ArbitraryGraphAlgorithmsSelectFrame.getInstance().getRenderer().addEdge(firstVertex.getValue(), secondVertex.getValue(), Integer.valueOf(value.getValue()));
         });
     }
 
     private JButton createRemoveEdgeButton() {
         return createButton("Remove", e -> {
-            ArbitraryGraphTraversingAlgorithmRenderFrame.getInstance().removeEdge(firstVertex.getValue(), secondVertex.getValue());
+            ArbitraryGraphAlgorithmsSelectFrame.getInstance().getRenderer().removeEdge(firstVertex.getValue(), secondVertex.getValue());
         });
     }
 
