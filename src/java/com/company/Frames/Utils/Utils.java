@@ -1,12 +1,20 @@
 package com.company.Frames.Utils;
 
+import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.TextFieldListener;
+import com.company.Frames.RenderingFrame;
+import com.company.Frames.Frame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class Utils {
+    protected static final String FULL_CLEAR_BUTTON_TEXT = "full clear";
+    protected static final String CLEAR_BUTTON_TEXT = "clear";
+    protected static final String RUN_BUTTON_TEXT = "run";
+    protected static final String BACK_BUTTON_TEXT = "back";
+
     /**
      * @param text            - text on a button
      * @param actionListeners listeners to be attached to a button
@@ -62,4 +70,29 @@ public class Utils {
         button.repaint();
     }
 
+    public static <P, T, E> JPanel creteBasicRenderingFrameController(RenderingFrame<P, T, E> frame, Frame previousFrame) {
+        JPanel controllers = new JPanel();
+        controllers.add(createFullClearGridButton(frame));
+        controllers.add(createClearGridButton(frame));
+        controllers.add(createRunAlgorithmButton(frame));
+        controllers.add(createBackButton(frame, previousFrame));
+        return controllers;
+    }
+
+    private static <P, T, E> JButton createRunAlgorithmButton(RenderingFrame<P, T, E> frame) {
+        return createButton(RUN_BUTTON_TEXT, e -> frame.runAlgorithm());
+    }
+
+    private static <P, T, E> JButton createFullClearGridButton(RenderingFrame<P, T, E> frame) {
+        return createButton(FULL_CLEAR_BUTTON_TEXT, e -> frame.resetField());
+    }
+
+    private static <P, T, E> JButton createClearGridButton(RenderingFrame<P, T, E> frame) {
+        return createButton(CLEAR_BUTTON_TEXT, e -> frame.resetVisuals());
+    }
+
+
+    private static <P, T, E> JButton createBackButton(RenderingFrame<P, T, E> frame, Frame previousFrame) {
+        return createButton(BACK_BUTTON_TEXT, e -> frame.resetVertexes(), new FrameMoveActiveListener(frame, previousFrame));
+    }
 }
