@@ -5,8 +5,10 @@ import java.awt.*;
 
 public class Edge extends JPanel {
     private static final int STROKE_WIDTH = 2;
+    private final Color DEFAULT_EDGE_COLOR = Color.BLACK;
     private final Vertex from;
     private final Vertex to;
+    private Color color = DEFAULT_EDGE_COLOR;
     private int value;
 
     public Edge(Vertex from, Vertex to) {
@@ -28,6 +30,18 @@ public class Edge extends JPanel {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void resetColor() {
+        this.color = DEFAULT_EDGE_COLOR;
     }
 
     private double calculateRadius(double dx, double dy, Vertex vertex) {
@@ -89,7 +103,7 @@ public class Edge extends JPanel {
         graphics.setStroke(new BasicStroke(STROKE_WIDTH));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        graphics.setColor(Color.GREEN);
+        graphics.setColor(color);
         graphics.drawLine(getLeftX(), getTopY(), getRightX(), getBottomY());
     }
 
