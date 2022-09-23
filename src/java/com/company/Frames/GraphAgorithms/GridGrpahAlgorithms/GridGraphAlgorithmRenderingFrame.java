@@ -1,6 +1,5 @@
 package com.company.Frames.GraphAgorithms.GridGrpahAlgorithms;
 
-import com.company.Frames.Listeners.FrameMoveActiveListener;
 import com.company.Frames.Listeners.GraphGridSelectCellActiveListener;
 import com.company.Frames.Listeners.ShowAnotherMenuActiveListener;
 import com.company.Frames.RenderingFrame;
@@ -18,8 +17,7 @@ import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.company.Frames.Utils.Utils.createButton;
-import static com.company.Frames.Utils.Utils.updateButton;
+import static com.company.Frames.Utils.Utils.*;
 
 /**
  * Window to render work of a graph algorithm and to manage it
@@ -64,8 +62,8 @@ public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<Map<GridPoi
         return instance;
     }
 
-    protected void runAlgorithm() {
-        resetFreeGridPointsVisualsExceptSelected();
+    public void runAlgorithm() {
+        resetVisuals();
         Map<GridPoint, GridPoint> results = algorithm.run(graph);
         TraversAlgorithmsResult<GridPoint> result = new TraversAlgorithmsResult<>(results, graph);
         renderWorkOfAlgorithm(result.getVisited());
@@ -118,9 +116,10 @@ public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<Map<GridPoi
     /**
      * Clears all visuals and select types
      */
-    public void clearGrid() {
+    @Override
+    public void resetVertexes() {
         graph.resetSelectedPoints();
-        resetGrid();
+        resetField();
     }
 
     private JButton createGridButton(int row, int col) {
@@ -196,7 +195,8 @@ public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<Map<GridPoi
         }).start();
     }
 
-    private void resetGrid() {
+    @Override
+    public void resetField() {
         for (JButton button : buttons.values()) {
             button.setBackground(FREE_GRID_POINT_COLOR);
             button.setText(GRID_BUTTON_DEFAULT_TEXT);
@@ -204,7 +204,8 @@ public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<Map<GridPoi
         graph.resetSelectedPoints();
     }
 
-    private void resetFreeGridPointsVisualsExceptSelected() {
+    @Override
+    public void resetVisuals() {
         for (Map.Entry<GridPoint, JButton> entry : buttons.entrySet()) {
             entry.getValue().setText(GRID_BUTTON_DEFAULT_TEXT);
             if (graph.isPointSelected(entry.getKey())) continue;
@@ -213,13 +214,9 @@ public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<Map<GridPoi
     }
 
     private JPanel createControllers() {
-        JPanel controllers = new JPanel();
+        JPanel controllers = creteBasicRenderingFrameController(this, GridGraphAlgorithmsSelectFrame.getInstance());
         generateSelectTypeControllersButtons().forEach(controllers::add);
         controllers.add(createRizeGridButton());
-        controllers.add(createFullClearGridButton());
-        controllers.add(createClearGridButton());
-        controllers.add(createRunAlgorithmButton());
-        controllers.add(createBackButton());
         controllers.setBounds(CONTROLLER_SIZE);
         return controllers;
     }
@@ -230,22 +227,6 @@ public class GridGraphAlgorithmRenderingFrame extends RenderingFrame<Map<GridPoi
 
     private JButton createRizeGridButton() {
         return createButton(RESIZE_BUTTON_TEXT, new ShowAnotherMenuActiveListener(GridResizingFrame.getInstance()));
-    }
-
-    private JButton createFullClearGridButton() {
-        return createButton(FULL_CLEAR_BUTTON_TEXT, e -> clearGrid());
-    }
-
-    private JButton createClearGridButton() {
-        return createButton(CLEAR_BUTTON_TEXT, e -> resetFreeGridPointsVisualsExceptSelected());
-    }
-
-    private JButton createRunAlgorithmButton() {
-        return createButton(RUN_BUTTON_TEXT, e -> runAlgorithm());
-    }
-
-    private JButton createBackButton() {
-        return createButton(BACK_BUTTON_TEXT, e -> resetGrid(), new FrameMoveActiveListener(this, GridGraphAlgorithmsSelectFrame.getInstance()));
     }
 
 }
