@@ -50,14 +50,6 @@ public class Vertex extends JPanel {
         toEdges.remove(edge);
     }
 
-    public int getOvalWidth() {
-        return calculateWidth(name) - STROKE_WIDTH;
-    }
-
-    public int getOvalHeight() {
-        return HEIGHT;
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
@@ -65,7 +57,6 @@ public class Vertex extends JPanel {
         graphics.setColor(color);
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.drawOval(STROKE_WIDTH / 2, STROKE_WIDTH / 2, calculateWidth(name) - STROKE_WIDTH, HEIGHT - STROKE_WIDTH);
-        //graphics.drawOval(0, 0, getWidth(), getHeight());
         graphics.setColor(Color.BLACK);
         graphics.drawString(name, NON_TEXT_WIDTH / 2, HEIGHT / 2);
     }
