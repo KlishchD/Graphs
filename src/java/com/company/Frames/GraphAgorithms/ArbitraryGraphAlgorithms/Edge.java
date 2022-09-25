@@ -45,16 +45,16 @@ public class Edge extends JPanel {
     }
 
     private double calculateRadius(double dx, double dy, Vertex vertex) {
-        double top = 0.5 * vertex.getOvalWidth() * vertex.getOvalHeight();
-        double bottom = Math.sqrt(vertex.getOvalWidth() * vertex.getOvalWidth() * dy * dy + vertex.getOvalHeight() * vertex.getOvalHeight() * dx * dx);
+        double top = 0.5 * vertex.getWidth() * vertex.getHeight();
+        double bottom = Math.sqrt(vertex.getWidth() * vertex.getWidth() * dy * dy + vertex.getHeight() * vertex.getHeight() * dx * dx);
         return top / bottom;
     }
 
     private Rectangle calculatePositionForLine() {
-        int x1 = from.getLocationOnScreen().x + from.getOvalWidth() / 2;
-        int x2 = to.getLocationOnScreen().x + to.getOvalWidth() / 2;
-        int y1 = from.getLocationOnScreen().y;
-        int y2 = to.getLocationOnScreen().y;
+        double x1 = from.getX() + from.getWidth() / 2.0;
+        double x2 = to.getX() + to.getWidth() / 2.0;
+        double y1 = from.getY() + from.getHeight() / 2.0;
+        double y2 = to.getY() + to.getHeight() / 2.0;
 
 
         double dx = x2 - x1;
