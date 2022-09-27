@@ -14,7 +14,7 @@ public class DataCarrier<T> {
         return value;
     }
 
-    public void setValue(T value, int i) {
+    public void setValue(T value) {
         this.value = value;
     }
 }

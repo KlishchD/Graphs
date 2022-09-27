@@ -1,21 +1,22 @@
 package com.company.Frames;
 
 
-import com.company.Frames.GraphAgorithms.GraphAlgorithmsFrame;
 import com.company.Frames.Listeners.FrameMoveActiveListener;
-import com.company.Frames.Utils.ButtonUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.company.Frames.Utils.Utils.createButton;
 
 /**
  * Main frame is a window which allows to select a type of algorithm to be watched or DataStructure, ...
  */
 public class MainFrame extends Frame {
     private static final MainFrame instance = new MainFrame();
-
     private final Dimension FRAME_SIZE = new Dimension(400, 200);
-    private final String GRAPH_ALGORITHM_BUTTON_TEXT = "Graph Algorithms";
+    private final List<JButton> selectFrameButton = new ArrayList<>();
 
     private MainFrame() {
     }
@@ -24,12 +25,12 @@ public class MainFrame extends Frame {
         return instance;
     }
 
-    private JButton createGraphAlgorithmsButton() {
-        return ButtonUtils.createButton(GRAPH_ALGORITHM_BUTTON_TEXT, new FrameMoveActiveListener(this, GraphAlgorithmsFrame.getInstance()));
+    public void registerSelectFrame(String name, AlgorithmSelectFrame frame) {
+        selectFrameButton.add(createButton(name, new FrameMoveActiveListener(this, frame)));
     }
 
     private void addComponents() {
-        add(createGraphAlgorithmsButton());
+        selectFrameButton.forEach(this::add);
     }
 
     @Override

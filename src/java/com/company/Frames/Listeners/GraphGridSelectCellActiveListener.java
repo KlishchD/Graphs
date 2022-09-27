@@ -1,7 +1,7 @@
 package com.company.Frames.Listeners;
 
-import com.company.Frames.GraphAgorithms.GridGraphAlgorithmFrame;
-import com.company.Graphs.Algorithms.GridGraphAlgorithms.GridPoint;
+import com.company.Frames.GraphAgorithms.GridGrpahAlgorithms.GridGraphAlgorithmRenderingFrame;
+import com.company.Graphs.GridPoint;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +20,6 @@ public class GraphGridSelectCellActiveListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        GridGraphAlgorithmFrame.getInstance().updatePointType(new GridPoint(row, col));
+        GridGraphAlgorithmRenderingFrame.getInstance().updatePointType(new GridPoint(row, col));
     }
 }
