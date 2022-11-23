@@ -2,9 +2,9 @@ This project consists of two 2 main parts:
 1) Convenient interface to work with graphs and graph algorithms
 2) GUI to illustrate work of graph algorithms
 
-#Graphs
+# Graphs
 
-##GraphInterface
+## GraphInterface
 
 Interface that defines main features of any graph that this system supports.
 
